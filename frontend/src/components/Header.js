@@ -21,7 +21,7 @@ const Header = () => {
 
       {/* Right section: Icons */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img src="path_to_your_fire_icon.png" alt="Fire" style={{ marginRight: '20px', height: '30px', width: '30px' }} />
+        <img src="./../public/trend.png" alt="Fire" style={{ marginRight: '20px', height: '30px', width: '30px' }} />
         <img src="path_to_your_menu_icon.png" alt="Menu" style={{ height: '30px', width: '30px' }} />
       </div>
 
