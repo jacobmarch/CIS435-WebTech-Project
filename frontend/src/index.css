@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to bottom, rgb(48, 48, 48), white);
+  height: 100vh; /* ensures gradient covers the full viewport height */
+  margin: 0;     /* removes default body margin */
 }
 
 code {

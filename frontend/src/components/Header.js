@@ -7,17 +7,16 @@ import React from 'react';
  */
 const Header = () => {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1E4A8C', padding: '10px 20px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'black', padding: '10px 20px' }}>
       
       {/* Left section: Logo and Title */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <img src="path_to_your_logo_icon.png" alt="Logo" style={{ marginRight: '10px', height: '30px', width: '30px' }} />
-        <h1 style={{ color: 'white', margin: 0 }}>Dearborn Voice</h1>
       </div>
 
       {/* Center section: Search bar */}
       <div style={{ flex: 1, paddingLeft: '20px', paddingRight: '20px' }}>
-        <input type="text" placeholder="Search..." style={{ width: '100%', padding: '10px', borderRadius: '20px' }} />
+        <input type="text" placeholder="Search..." style={{ width: '50%', padding: '10px', borderRadius: '20px' }} />
       </div>
 
       {/* Right section: Icons */}
