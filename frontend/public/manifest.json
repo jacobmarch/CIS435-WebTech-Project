@@ -5,7 +5,12 @@
     {
       "src": "trend.png",
       "type": "image/png",
-      "sizes": "320x394"
+      "size": "320x394"
+    },
+    {
+      "src": "hamburger-menu.png",
+      "type": "image/png",
+      "size": "64x64"
     }
   ],
   "start_url": ".",
