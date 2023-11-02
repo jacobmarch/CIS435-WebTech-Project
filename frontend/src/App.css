@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.menu-link {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none; /* Removes underline from links */
+  margin: 5px; /* Adds some space between the buttons */
+  display: block; /* Allows margin to take effect */
+  border-radius: 5px; /* Rounds the corners of the buttons */
+}
+
+.menu-link:hover {
+  background-color: #333; /* Slightly lighter black on hover for feedback */
+  color: #ddd; /* Slightly darker white on hover for feedback */
+}
