@@ -7,8 +7,13 @@ function App() {
   return (
     <div className="App">
     <Header/>
-    <SignUpPage/>
-    <LoginPage/>
+    <div className='CenterContainer'>
+      <SignUpPage/>
+     { 
+     //<LoginPage/>
+     }
+    </div>
+    
   </div>
   );
 }
