@@ -1,6 +1,16 @@
 .App {
   text-align: center;
+  display: grid; /* Make App a grid container */
+  grid-template-rows: auto 1fr; /* Header size is auto, rest is 1 fraction */
+  height: 100vh; /* Full viewport height */
 }
+
+.CenterContainer {
+  display: grid;
+  place-items: center;
+}
+
+/* Add styles for the Header if not already present */
 
 .App-logo {
   height: 40vmin;

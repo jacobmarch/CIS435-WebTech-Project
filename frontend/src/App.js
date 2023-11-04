@@ -1,12 +1,14 @@
-import logo from './logo.svg';
 import Header from './components/Header';
+import SignUpPage from './components/signup';
+import Login from './components/Login';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-    </div>
+    <Header/>
+    <Login/>
+  </div>
   );
 }
 
