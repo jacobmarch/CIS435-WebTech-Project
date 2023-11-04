@@ -5,7 +5,7 @@ import React from 'react';
  *
  * @return {JSX.Element} The sign-up page component.
  */
-const SignUpPage = () => {
+const LoginPage = () => {
     return (
         <div className='SignUpContainer' style={{
             display: 'flex',
@@ -112,4 +112,4 @@ const buttonStyle = {
     cursor: 'pointer',
     fontSize: '20px'
 }
-export default SignUpPage;
+export default LoginPage;
