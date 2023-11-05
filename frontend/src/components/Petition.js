@@ -12,7 +12,7 @@ const Petition = () => {
         <div className="petition-container">
             <div className="header-section">
                 <div className="image-section">
-                    <img src="path_to_image_here" alt="Profile"/>
+                    <img src="/user_alt.svg" alt="Profile"/>
                 </div>
                 <div className="title-section">
                     Title
