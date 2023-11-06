@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import { Link } from "react-router-dom";
 
 /**
  * Renders the header component.
@@ -7,50 +7,59 @@ import { Link } from 'react-router-dom';
  * @return {JSX.Element} The header component.
  */
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'black', padding: '10px 0' }}>
-
-      {/* Header container */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 20px' }}>
-        
-        {/* Left section: Logo */}
-        <div style={{ flex: '1', display: 'flex', alignItems: 'center' }}>
-          <Link to="/">
-            <img src="/logo-icon.png" alt="Logo" style={{ marginRight: '10px', height: '40px', width: '30px' }} />
-          </Link> 
-        </div>
-
-        {/* Center section: Search bar */}
-        <div style={{ flex: '3', width: '100%' }}>
-          <input type="text" placeholder="Search..." style={{ width: '60%', padding: '10px', borderRadius: '20px' }} />
-        </div>
-
-        {/* Right section: Icons and Menu */}
-        <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end' }}>
-          <Link to="/trending">
-            <img src="/trend.png" alt="Fire" style={{ height: '40px', width: '40px', cursor: 'pointer' }} />
-          </Link>
-          <img src="/hamburger-menu.png" alt="Menu" style={{ height: '40px', width: '50px', cursor: 'pointer', marginLeft: '20px' }} onClick={toggleMenu} />
-        </div>
-      </div>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'black', padding: '20px 20px',marginTop:'5px' }}>
       
-      {/* Dropdown Menu */}
-      {menuOpen && (
-        <div style={{ position: 'absolute', right: '20px', top: '60px', backgroundColor: 'darkgray', borderRadius: '5px', padding: '10px', zIndex: '100' }}>
-          <Link to="/" className='menu-link'>Home</Link>
-          <Link to="/about" className='menu-link'>About</Link>
-          <Link to="/contact" className='menu-link'>Contact</Link>
-        </div>
-      )}
+      {/* Left section: Logo and Title */}
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <img src="/DearbornVoice.png" alt="Logo" style={{ marginRight: '10px', height: '40px', width: '120px' }} />
+      </div>
+
+
+  {/* Center section: Search bar */}
+  <div style={{ flex: 1, paddingLeft: '20px', paddingRight: '20px'}}>
+    <input
+      type="text"
+      style={{
+        width: '40%', // Adjusted to take the full width of the parent div
+        padding: '10px',
+        borderRadius: '20px',
+        backgroundColor: '#ffffff',
+        border: 'none',
+        color: '#000000',
+        fontFamily: 'inherit',
+        fontSize: '20px',
+        outline: '0',
+        marginRight:'225px'
+
+      }}
+    />
+  </div>
+
+      {/* Right section: Icons */}
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Link to="/trending">
+            <img src="/trend.png" alt="Fire" style={{ marginRight: '20px', height: '30px', width: '30px' }} />
+          </Link>
+          <img src="/hamburger-menu.png" alt="Menu" style={{ height: '30px', width: '30px' }} onClick={toggleMenu} />
+      </div>
+        {/* Dropdown Menu */}
+        {menuOpen && (
+            <div style={{ position: 'absolute', right: '20px', top: '70px', backgroundColor: 'darkgray', borderRadius: '5px', padding: '10px', zIndex: '100' }}>
+                <Link to="/" className='menu-link'>Home</Link>
+                <Link to="/account" className='menu-link'>Account</Link>
+            </div>
+        )}
 
     </div>
   );
-};
+}
 
 export default Header;

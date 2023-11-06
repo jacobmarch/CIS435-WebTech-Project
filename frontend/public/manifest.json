@@ -11,6 +11,11 @@
       "src": "hamburger-menu.png",
       "type": "image/png",
       "size": "64x64"
+    },
+    {
+      "src": "User_alt.svg",
+      "type": "image/svg",
+      "size": "64x64"
     }
   ],
   "start_url": ".",

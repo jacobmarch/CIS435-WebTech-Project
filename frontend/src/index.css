@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to bottom, rgb(48, 48, 48), white);
+  background: linear-gradient(180deg, #000 16.15%, #FFF 100%);
   height: 100vh; /* ensures gradient covers the full viewport height */
   margin: 0;     /* removes default body margin */
 }
