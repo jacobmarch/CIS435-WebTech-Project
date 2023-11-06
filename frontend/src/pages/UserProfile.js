@@ -23,8 +23,7 @@ const UserProfile = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          paddingRight: '20px',
-          backgroundColor: 'black',
+          background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)',
           color: 'white'
         }}>
           <img src="/user_alt.svg" alt="User avatar" className="avatar" style={{
