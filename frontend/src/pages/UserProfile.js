@@ -71,7 +71,7 @@ const UserProfile = () => {
 const PetitionCard = () => {
 
     const actionButtonStyles = {
-      backgroundColor: 'darkgray',
+      background: 'black',
       color: 'white',
       padding: '10px 20px',
       border: 'none',
@@ -90,8 +90,8 @@ const PetitionCard = () => {
         border: '1px solid black',
         }}>
       <div className="petition-actions">
-        <button className="sign" style={{actionButtonStyles}}>Sign</button>
-        <button className="comments" style={{actionButtonStyles}}>Comment</button>
+        <button className="sign" style={actionButtonStyles}>Sign</button>
+        <button className="comments" style={actionButtonStyles}>Comment</button>
       </div>
       <div className="petition-info" >
         <h3><u>Title</u></h3>
