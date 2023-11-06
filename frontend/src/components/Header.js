@@ -19,7 +19,7 @@ const Header = () => {
       
       {/* Left section: Logo and Title */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img src="/DearbornVoice.png" alt="Logo" style={{ marginRight: '10px', height: '40px', width: '120px' }} />
+        <img src="/DearbornVoice.png" alt="Logo" style={{ marginRight: '10px', height: '40px', width: '70px' }} />
       </div>
 
 
