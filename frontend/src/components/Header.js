@@ -15,7 +15,7 @@ const Header = () => {
     }
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'black', padding: '20px 20px',marginTop:'5px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'black', padding: '20px 20px',marginTop:'5px'}}>
       
       {/* Left section: Logo and Title */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
