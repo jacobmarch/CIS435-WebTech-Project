@@ -21,7 +21,9 @@ const Header = () => {
         
         {/* Left section: Logo */}
         <div style={{ flex: '1', display: 'flex', alignItems: 'center' }}>
-          <img src="/logo-icon.png" alt="Logo" style={{ marginRight: '10px', height: '40px', width: '30px' }} />
+          <Link to="/">
+            <img src="/logo-icon.png" alt="Logo" style={{ marginRight: '10px', height: '40px', width: '30px' }} />
+          </Link> 
         </div>
 
         {/* Center section: Search bar */}
