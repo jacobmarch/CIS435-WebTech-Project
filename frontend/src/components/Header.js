@@ -29,6 +29,7 @@ const Header = () => {
   <div style={{ flex: 1, paddingLeft: '20px', paddingRight: '20px'}}>
     <input
       type="text"
+      placeholder="Search..."
       style={{
         width: '40%', // Adjusted to take the full width of the parent div
         padding: '10px',

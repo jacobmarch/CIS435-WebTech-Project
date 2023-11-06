@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Header from './components/Header';
 import SignUpPage from './pages/Signup';
 import LoginPage from './pages/Login';
-import AccountPage from './pages/Account';
+import Account from './pages/Account';
 import MainFeed from './pages/MainFeed';
 import './App.css';
 
@@ -11,7 +11,7 @@ function App() {
     return (
             <div className="App">
                 <Header/>
-                <LoginPage />
+                <Account />
             </div>
     );
 }
