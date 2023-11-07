@@ -12,6 +12,7 @@ function App() {
     return (
             <div className="App">
                 <Header/>
+
                 <Routes>
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/login" element={<LoginPage />} />
@@ -20,6 +21,7 @@ function App() {
                     {/* If no other routes match, you can have a catch-all redirect or a 404 component */}
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
+
             </div>
     );
 }
