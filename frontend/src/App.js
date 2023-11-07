@@ -5,13 +5,23 @@ import SignUpPage from './pages/Signup';
 import LoginPage from './pages/Login';
 import UserProfile from './pages/UserProfile';
 import MainFeed from './pages/MainFeed';
+import Settings from './pages/Settings';
 import './App.css';
 
 function App() {
     return (
             <div className="App">
                 <Header/>
-                <MainFeed/>
+
+                <Routes>
+                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/userprofile" element={<UserProfile />} />
+                    <Route path="/settings" element={<Settings />} />
+                    {/* If no other routes match, you can have a catch-all redirect or a 404 component */}
+                    <Route path="*" element={<Navigate replace to="/" />} />
+                </Routes>
+
             </div>
     );
 }
