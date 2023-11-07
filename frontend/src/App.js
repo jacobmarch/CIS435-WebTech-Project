@@ -5,13 +5,14 @@ import SignUpPage from './pages/Signup';
 import LoginPage from './pages/Login';
 import UserProfile from './pages/UserProfile';
 import MainFeed from './pages/MainFeed';
+import Settings from './pages/Settings';
 import './App.css';
 
 function App() {
     return (
             <div className="App">
                 <Header/>
-                <UserProfile />
+                <Settings />
             </div>
     );
 }
