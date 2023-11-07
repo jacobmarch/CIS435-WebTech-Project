@@ -12,7 +12,7 @@ const MainFeed = () => {
      }, []);
 
      return (
-          <div className="user-profile-container" style={{
+          <div className="main-feed-container" style={{
                display: 'flex',
                backgroundColor: 'white',
                height: '100vh',
@@ -27,7 +27,8 @@ const MainFeed = () => {
                          display: 'flex',
                          padding: '20px',
                          marginRight: '20px',
-                         flexDirection: 'column'
+                         flexDirection: 'column',
+                         alignItems: 'center'
                     }}>
                          <PetitionCard />
                          <PetitionCard />
@@ -53,8 +54,7 @@ const PetitionCard = () => {
           marginTop: '10px',
           display: 'flex',
           flexDirection: 'column',
-          width: '100%',
-          align: 'center'
+          height: '250px'
      };
 
      return (
@@ -66,8 +66,7 @@ const PetitionCard = () => {
                display: 'flex',
                justifyContent: 'space-between',
                border: '1px solid black',
-               width: '100%',
-               height: '100%',
+               width: '80%',
           }}>
                <div className="petition-actions">
                     <button className="sign" style={actionButtonStyles}>Sign</button>
