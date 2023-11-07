@@ -18,7 +18,7 @@ const SettingsPage = () => {
       case 'View Profile':
         return (
           <div className="settings-section">
-            <ProfileImage src="path_to_profile_image.jpg" />
+            <ProfileImage src="/user_alt.svg" />
             <h3>Profile Information</h3>
             <p>Name: John Doe</p>
             <p>Email: johndoe@example.com</p>

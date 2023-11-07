@@ -1,25 +1,17 @@
 /* Global Styles */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #222; /* Dark background */
-    color: #fff; /* White text */
-  }
-  
+
   /* Settings Page Container */
   .settings-page {
     display: flex;
     font-family: Arial, sans-serif;
     height: 100vh;
-    background-color: #222; /* Dark background */
     color: #fff; /* White text */
   }
   
   /* Sidebar */
   .sidebar {
+    margin-top: 5rem;
     width: 250px;
-    background-color: #333; /* Dark grey sidebar */
     color: #fff;
     padding: 2rem;
     display: flex;
@@ -56,13 +48,13 @@ body {
   .nav-button:hover {
     background-color: #444; /* Dark grey on hover */
     color: #e8f6f8; /* Light blue on hover */
-    border-left-color: #00bcd4;
+    border-left-color: #000000;
   }
   
   .nav-button.active {
     background-color: #444; /* Dark grey for active */
-    color: #00bcd4; /* Light blue for active */
-    border-left-color: #00bcd4;
+    color: white; /* Light blue for active */
+    border-left-color: #000000;
   }
   
   /* Main Content */
@@ -70,7 +62,6 @@ body {
     flex-grow: 1;
     padding: 2rem;
     transition: background-color 0.3s;
-    background-color: #333; /* Slightly lighter grey content background */
     color: #fff; /* White text */
   }
   
@@ -79,7 +70,7 @@ body {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 5px solid #00bcd4;
+    background-color: white;
     object-fit: cover;
   }
   
@@ -98,22 +89,20 @@ body {
     margin: 1rem 0;
     padding: 1rem;
     width: 100%;
-    border: 2px solid #00bcd4;
     border-radius: 5px;
     font-size: 1rem;
-    color: #333;
-    background-color: #222; /* Dark input background */
+    color: black; /* Dark input background */
     transition: border-color 0.3s;
   }
   
   .input-style:focus {
-    border-color: #00bcd4; /* Light blue border on focus */
+    border-color: black; /* Light blue border on focus */
     outline: none;
   }
   
   /* Interactive Button */
   .interactive-button {
-    background-color: #00bcd4;
+    background-color: #000000;
     color: #fff;
     border: none;
     padding: 1rem 2rem;
@@ -124,7 +113,7 @@ body {
   }
   
   .interactive-button:hover {
-    background-color: #007bff; /* Lighter blue on hover */
+    background-color: rgb(175, 175, 175); /* Lighter blue on hover */
   }
   
   /* Fade In Animation */
