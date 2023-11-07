@@ -48,7 +48,7 @@ const UserProfile = () => {
           <h2>John Smith's Petitions</h2>
           <div className="petitions-list" style={{
               overflowY: 'auto', // Enable scrolling
-              maxHeight: 'calc(100vh - 60px)', // Set maximum height (viewport height minus some offset)
+              maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
               padding: '20px',
               display: 'flex',
               flexDirection: 'column'
