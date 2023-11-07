@@ -23,9 +23,10 @@ const MainFeed = () => {
                     <h2>Main Petition Feed</h2>
                     <div className="petitions-list" style={{
                          overflowY: 'auto', // Enable scrolling
-                         maxHeight: 'calc(100vh - 60px)', // Set maximum height (viewport height minus some offset)
-                         padding: '200px',
+                         maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
                          display: 'flex',
+                         padding: '20px',
+                         marginRight: '20px',
                          flexDirection: 'column'
                     }}>
                          <PetitionCard />
@@ -49,7 +50,11 @@ const PetitionCard = () => {
           padding: '10px 20px',
           border: 'none',
           cursor: 'pointer',
-          marginTop: '10px'
+          marginTop: '10px',
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          align: 'center'
      };
 
      return (
@@ -68,7 +73,7 @@ const PetitionCard = () => {
                     <button className="sign" style={actionButtonStyles}>Sign</button>
                     <button className="comments" style={actionButtonStyles}>Comment</button>
                </div>
-               <div className="petition-info" >
+               <div className="petition-info" > 
                     <h3><u>Title</u></h3>
                     <p>This is a summary of the petition. It is a very useful and descriptive summary. I am so glad that this awesome website includes a summary to display for each petition.</p>
                </div>
