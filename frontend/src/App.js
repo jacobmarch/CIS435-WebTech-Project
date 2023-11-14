@@ -11,7 +11,7 @@ import './App.css';
 
 
 const supabaseURL = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_KEY;
+const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
 const supabase = createClient(supabaseURL, supabaseAnonKey);
 
