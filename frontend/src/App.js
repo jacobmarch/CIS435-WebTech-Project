@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { createClient } from '@supabase/supabase-js';
 import Header from './components/Header';
 import SignUpPage from './pages/Signup';
 import LoginPage from './pages/Login';
@@ -7,6 +8,12 @@ import UserProfile from './pages/UserProfile';
 import MainFeed from './pages/MainFeed';
 import Settings from './pages/Settings';
 import './App.css';
+
+
+const supabaseURL = process.env.REACT_APP_SUPABASE_URL;
+const supabaseAnonKey = process.env.REACT_APP_SUPABASE_KEY;
+
+const supabase = createClient(supabaseURL, supabaseAnonKey);
 
 function App() {
     return (
