@@ -15,6 +15,8 @@ const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
 const supabase = createClient(supabaseURL, supabaseAnonKey);
 
+export { supabase };
+
 function App() {
     return (
             <div className="App">

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { supabase } from '../App';
 
 /**
  * Renders the sign-up page component.
@@ -6,6 +7,33 @@ import React from 'react';
  * @return {JSX.Element} The sign-up page component.
  */
 const SignUpPage = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        // Supabase call to sign up the user
+        const { user, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        });
+
+        if (error) {
+            setError(error.message);
+        } else {
+            // You can handle the successful sign-up case here
+            console.log('User signed up:', user);
+            // Redirect the user or show a success message
+        }
+        setLoading(false);
+    };
+
     return (
         <div className='SignUpContainer' style={{
             display: 'flex',
@@ -30,7 +58,7 @@ const SignUpPage = () => {
                 padding: '2%',
             }}>
 
-                <form style={{
+                <form onSubmit={handleSignUp} style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -41,11 +69,24 @@ const SignUpPage = () => {
                     <div style={{ background: '#FFF', width: '200px', height: '200px', borderRadius: '50%', marginBottom: '25px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <img src="/user_alt.svg" alt="profile" style={{ border:'none',height: '161px', width: '165px', display: 'block', margin: 'auto' }} />
                     </div>
-
-                    <input placeholder="Username" style={inputStyle} />
-                    <input placeholder="Email" style={inputStyle} />
-                    <input placeholder="Password" type="password" style={inputStyle} />
-                    <button style={buttonStyle}>Sign Up</button>
+                    <input
+                        placeholder="Email"
+                        type="email"
+                        style={inputStyle}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        placeholder="Password"
+                        type="password"
+                        style={inputStyle}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type="submit" disabled={loading} style={buttonStyle}>
+                        {loading ? 'Loading...' : 'Sign Up'}
+                    </button>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                     <label style={{ color: 'white', marginBottom: '20px' }}>or you can sign up with</label>
 
                     <div style={{ display: 'flex', width: '120px', height: '48px', justifyContent: 'space-between' }}>
@@ -76,11 +117,6 @@ const SignUpPage = () => {
                             <img src="/logo-apple.svg" alt="Apple" style={{ width: '70%', height: '85%' }} />
                         </button>
                     </div>
-
-
-
-
-
                 </form>
             </div>
         </div>
