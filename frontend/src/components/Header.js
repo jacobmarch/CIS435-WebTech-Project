@@ -57,7 +57,12 @@ const Header = () => {
         {menuOpen && (
             <div style={{ position: 'absolute', right: '20px', top: '70px', backgroundColor: 'darkgray', borderRadius: '5px', padding: '10px', zIndex: '100' }}>
                 <Link to="/" className='menu-link'>Home</Link>
-                <Link to="/account" className='menu-link'>Account</Link>
+                <Link to="/Settings" className='menu-link'>Settings</Link>
+                <Link to="/Login" className='menu-link'>Login</Link>
+                <Link to="/UserProfile" className='menu-link'>User Profile</Link>
+                <Link to="/Signup" className='menu-link'>Signup</Link>
+
+
             </div>
         )}
 
