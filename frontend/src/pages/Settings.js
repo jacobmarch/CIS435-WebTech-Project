@@ -18,9 +18,9 @@ const SettingsPage = () => {
     document.body.style.overflow = 'hidden';
 
     return () => {
-        document.body.style.overflow = originalStyle;
+      document.body.style.overflow = originalStyle;
     }
-}, []);
+  }, []);
 
   const renderActiveSection = () => {
     switch (activeSection) {

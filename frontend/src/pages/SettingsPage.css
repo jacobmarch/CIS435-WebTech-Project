@@ -1,137 +1,147 @@
 /* Global Styles */
 
-  /* Settings Page Container */
-  .settings-page {
-    display: flex;
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    color: #fff; /* White text */
-  }
-  
-  /* Sidebar */
-  .sidebar {
-    margin-top: 5rem;
-    width: 250px;
-    color: #fff;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Sidebar Logo */
-  .logo {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-  }
-  
-  /* Navigation */
-  .nav {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .nav-button {
-    padding: 1rem 2rem;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    text-align: left;
-    color: #fff;
-    font-size: 1.2rem;
-    transition: background-color 0.3s, color 0.3s;
-    border-left: 5px solid transparent;
-  }
-  
-  .nav-button:hover {
-    background-color: #444; /* Dark grey on hover */
-    color: #e8f6f8; /* Light blue on hover */
-    border-left-color: #000000;
-  }
-  
-  .nav-button.active {
-    background-color: #444; /* Dark grey for active */
-    color: white; /* Light blue for active */
-    border-left-color: #000000;
-  }
-  
-  /* Main Content */
-  .main {
-    flex-grow: 1;
-    padding: 2rem;
-    transition: background-color 0.3s;
-    color: #fff; /* White text */
-  }
-  
-  /* Profile Image */
-  .profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: white;
-    object-fit: cover;
-  }
-  
-  /* Settings Section */
-  .settings-section {
-    background-color: #444; /* Dark grey settings section */
-    padding: 2rem;
-    border: 1px solid #333; /* Slightly lighter grey border */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced box shadow */
-  }
-  
-  /* Input Styles */
-  .input-style {
-    display: block;
-    margin: 1rem 0;
-    padding: 1rem;
-    width: 97%;
-    border-radius: 5px;
-    font-size: 1rem;
-    color: black; /* Dark input background */
-    transition: border-color 0.3s;
-  }
-  
-  .input-style:focus {
-    border-color: black; /* Light blue border on focus */
-    outline: none;
-  }
-  
-  /* Interactive Button */
-  .interactive-button {
-    background-color: #000000;
-    color: #fff;
-    border: none;
-    padding: 1rem 2rem;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    transition: background-color 0.3s;
-  }
-  
-  .interactive-button:hover {
-    background-color: rgb(175, 175, 175); /* Lighter blue on hover */
-  }
-  
-  /* Fade In Animation */
-  .fade-enter {
-    opacity: 0;
-  }
-  
-  .fade-enter-active {
-    opacity: 1;
-    transition: opacity 500ms;
-  }
-  
-  .fade-exit {
-    opacity: 1;
-  }
-  
-  .fade-exit-active {
-    opacity: 0;
-    transition: opacity 500ms;
-  }
-  
+/* Settings Page Container */
+.settings-page {
+  display: flex;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  color: #fff;
+  /* White text */
+}
+
+/* Sidebar */
+.sidebar {
+  margin-top: 5rem;
+  width: 250px;
+  color: #fff;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Sidebar Logo */
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nav-button {
+  padding: 1rem 2rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  color: #fff;
+  font-size: 1.2rem;
+  transition: background-color 0.3s, color 0.3s;
+  border-left: 5px solid transparent;
+}
+
+.nav-button:hover {
+  background-color: #444;
+  /* Dark grey on hover */
+  color: #e8f6f8;
+  /* Light blue on hover */
+  border-left-color: #000000;
+}
+
+.nav-button.active {
+  background-color: #444;
+  /* Dark grey for active */
+  color: white;
+  /* Light blue for active */
+  border-left-color: #000000;
+}
+
+/* Main Content */
+.main {
+  flex-grow: 1;
+  padding: 2rem;
+  transition: background-color 0.3s;
+  color: #fff;
+  /* White text */
+}
+
+/* Profile Image */
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: white;
+  object-fit: cover;
+}
+
+/* Settings Section */
+.settings-section {
+  background-color: #444;
+  /* Dark grey settings section */
+  padding: 2rem;
+  border: 1px solid #333;
+  /* Slightly lighter grey border */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* Enhanced box shadow */
+}
+
+/* Input Styles */
+.input-style {
+  display: block;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 50%;
+  border-radius: 20px;
+  font-size: 1rem;
+  color: black;
+  transition: border-color 0.3s;
+}
+
+.input-style:focus {
+  border-color: black;
+  outline: none;
+}
+
+/* Interactive Button */
+.interactive-button {
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
+}
+
+.interactive-button:hover {
+  background-color: rgb(175, 175, 175);
+  /* Lighter blue on hover */
+}
+
+/* Fade In Animation */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
