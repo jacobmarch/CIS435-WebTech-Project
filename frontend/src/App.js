@@ -21,6 +21,7 @@ function App() {
                 <Header/>
 
                 <Routes>
+                    <Route path="/" element={<MainFeed />} />
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/userprofile" element={<UserProfile />} />
