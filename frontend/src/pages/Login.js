@@ -12,6 +12,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -28,6 +29,7 @@ const LoginPage = () => {
         } else {
             // Redirect or perform any action after successful login
             console.log('User logged in:', user, session);
+            setIsLoggedIn(true);
         }
         setLoading(false);
     };
