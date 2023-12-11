@@ -27,8 +27,8 @@ const MainFeed = () => {
                <div className="petitions-container" style={{ flexGrow: '1', overflowY: 'hidden', background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)', color: 'white' }}>
                     {/* ADD button for petition  */}
                     
-                    <div className= "New_petition_button" style={{  width:'86.5%', display: 'flex', justifyContent:'flex-end'}}>
-                     <button onClick={()=> setButtonPopup(true)} style={{ width:'100px', height:'40px', }} >NEW</button>    
+                    <div className= "New_petition_button" style={{ width:'86.5%', display: 'flex', justifyContent:'flex-end'}}>
+                     <button onClick={()=> setButtonPopup(true)} style={{  borderRadius: '15px',width:'100px', height:'40px', }} >NEW</button>    
                      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                          
                      </Popup>
