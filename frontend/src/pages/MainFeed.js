@@ -5,7 +5,7 @@ import { supabase } from '../App';
 
 
 const MainFeed = () => {
-const [petitions, setPetitions] = useState([]);
+     const [petitions, setPetitions] = useState([]);
      React.useEffect(() => {
           const originalStyle = window.getComputedStyle(document.body).overflow;
           document.body.style.overflow = 'hidden';
@@ -17,10 +17,10 @@ const [petitions, setPetitions] = useState([]);
                     petitionid,
                     title,
                     description,
-                    createduserid,
+                    createdUserID,
                     categoryid,
                     users!inner (
-                         userid,
+                         userID,
                          profilepic,
                          name
                     )
@@ -33,7 +33,7 @@ const [petitions, setPetitions] = useState([]);
                     console.log(data)
                }
           };
-          fetchPetitions();
+          const intervalId = setInterval(fetchPetitions, 10000); // 5000 milliseconds = 5 seconds
 
           return () => {
                document.body.style.overflow = originalStyle;
