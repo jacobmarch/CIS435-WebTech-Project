@@ -125,7 +125,7 @@ const PetitionCard = ({title, description, imageUrl, user}) => {
               <button className="comments" style={actionButtonStyles}>Comment</button>
             </div>
           </div>
-          <div className="petition-info" style={{ marginLeft: '20px' }}>
+          <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
             <h3><u>{title}</u></h3>
             <p>{description}</p>
           </div>
