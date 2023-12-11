@@ -25,6 +25,7 @@ function App() {
             <div className="App">
                 <Header/>
                 <Routes>
+                    {/* Routes go here */}
                     <Route path="/" element={<MainFeed />} />
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/login" element={<LoginPage />} />

@@ -47,10 +47,12 @@ const Header = () => {
 
 
     {/* Center section: Search bar */}
+    {isLoggedIn ? (
     <div style={{ flex: 1, paddingLeft: '20px', paddingRight: '20px'}}>
       <input
         type="text"
         placeholder="Search..."
+        id="search-input"
         style={{
           width: '40%', // Adjusted to take the full width of the parent div
           padding: '10px',
@@ -65,7 +67,11 @@ const Header = () => {
         }}
         onSubmit={handleSearch}
       />
-    </div>
+    </div>) : (
+      <div>
+
+      </div>
+    )}
 
       {/* Right section: Icons */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
