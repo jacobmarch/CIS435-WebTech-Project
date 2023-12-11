@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { supabase } from '../App';
 
+//Create the handleSearch function
+function handleSearch(event) {
+  event.preventDefault();
+  const searchInput = document.getElementById('search-input');
+  window.location.href = `/search?query=${searchInput.value}`;
+}
 
 /**
  * Renders the header component.
@@ -17,7 +23,7 @@ const Header = () => {
     const session = supabase.auth.getSession();
     const user = supabase.auth.getUser();
   
-    setIsLoggedIn(session !== false && user !== null);
+    setIsLoggedIn(session !== null && user !== null);
   
     supabase.auth.onAuthStateChange((event, session) => {
       setIsLoggedIn(session !== null && user !== null);
@@ -56,8 +62,8 @@ const Header = () => {
           fontSize: '20px',
           outline: '0',
           marginRight:'225px'
-
         }}
+        onSubmit={handleSearch}
       />
     </div>
 
