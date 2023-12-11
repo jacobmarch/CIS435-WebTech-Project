@@ -15,15 +15,12 @@ const Header = () => {
 
   useEffect(() => {
     const session = supabase.auth.getSession();
+    const user = supabase.auth.getUser();
   
-    setIsLoggedIn(session !== false && session.user !== null);
+    setIsLoggedIn(session !== false && user !== null);
   
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        setIsLoggedIn(true);
-      } else if (event === 'SIGNED_OUT') {
-        setIsLoggedIn(false);
-      }
+    supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(session !== null && user !== null);
     });
   }, []);
 
