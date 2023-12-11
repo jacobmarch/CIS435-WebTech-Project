@@ -106,7 +106,8 @@ const PetitionCard = ({title, description, imageUrl, user}) => {
           alignItems: 'center',
           border: '1px solid black',
           borderRadius: '10px',
-          minWidth: '75vw'
+          minWidth: '75vw',
+          maxWidth: '75vw'
         }}>
           <img src={imageUrl} alt="Profile" style={{
             width: '100px',
