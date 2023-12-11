@@ -18,6 +18,7 @@
     background-color: #FFF;
     height: 50%;
     border-radius: 30px;
+    color: blue;
 }
 
 .popup-inner .close-btn {
@@ -27,4 +28,64 @@
     border-radius: 10px;
     width: 100px;
     height: 30px
+}
+/* Overall form styling */
+.popup-form {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    max-width: 350px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+}
+
+/* Style for each label */
+.popup-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Style for each input field */
+.popup-form input[type="text"],
+.popup-form input[type="email"],
+.popup-form input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.popup-form input[type="text"]:focus,
+.popup-form input[type="email"]:focus,
+.popup-form input[type="password"]:focus {
+    border-color: #007aff;
+    box-shadow: 0 0 8px rgba(0, 122, 255, 0.5);
+    outline: none;
+}
+
+/* Style for the submit button */
+.popup-form input[type="submit"] {
+    width: calc(100% - 20px);
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    background-color: #007aff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 50px;
+}
+
+.popup-form input[type="submit"]:hover {
+    background-color: #005ecb;
 }
