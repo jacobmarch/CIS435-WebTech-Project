@@ -19,7 +19,7 @@ const LoginPage = () => {
         setLoading(true);
         setError(null);
 
-        const { user, session, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password,
         });
@@ -28,8 +28,8 @@ const LoginPage = () => {
             setError(error.message);
         } else {
             // Redirect or perform any action after successful login
-            console.log('User logged in:', user, session);
-            setIsLoggedIn(true);
+            console.log(data.user.id);
+            window.location.href = '/';
         }
         setLoading(false);
     };
