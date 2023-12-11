@@ -10,13 +10,24 @@ const MainFeed = () => {
 
           const fetchPetitions = async () => {
                const {data, error} = await supabase
-                 .from('petitions')
-                 .select('*');
+               .from('petitions')
+               .select(`
+                    petitionid,
+                    title,
+                    description,
+                    createduserid,
+                    categoryid,
+                    users!inner (
+                         userid,
+                         profilepic
+                    )
+               `);
 
                if (error) {
                     console.error('error fetching petitions: ', error)
                } else {
                     setPetitions(data)
+                    console.log(data)
                }
           };
           fetchPetitions();
@@ -50,6 +61,7 @@ const MainFeed = () => {
                                    key={petition.petitionid} 
                                    title={petition.title} 
                                    description={petition.description}
+                                   imageUrl={petition.users.profilepic || '/profile-default.png'}
                               />
                          ))}
                     </div>
@@ -58,7 +70,7 @@ const MainFeed = () => {
      );
 };
 
-const PetitionCard = ({title, description}) => {
+const PetitionCard = ({title, description, imageUrl}) => {
      const actionButtonStyles = {
           background: 'black',
           color: 'white',
@@ -78,6 +90,12 @@ const PetitionCard = ({title, description}) => {
          justifyContent: 'space-between',
          border: '1px solid black',
          }}>
+          <img src={imageUrl} alt="Profile" style={{
+               width: '100px',
+               height: '100px',
+               marginRight: '20px',
+               borderRadius: '50%',
+          }} />
           <div className="petition-actions">
                <button className="sign" style={actionButtonStyles}>Sign</button>
                <button className="comments" style={actionButtonStyles}>Comment</button>
