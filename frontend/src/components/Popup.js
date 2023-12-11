@@ -34,10 +34,10 @@ function Popup(props) {
                 <button className="close-btn" onClick={() => props.setTrigger(false)}>close</button>
                 <form className="popup-form" onSubmit={handleSubmit}>
                     <label>Title:</label>
-                    <input value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input  value={title} onChange={(e) => setTitle(e.target.value)} maxLength={20} required />
 
                     <label>Description</label>
-                    <input value={description} onChange={(e) => setDescription(e.target.value)} />
+                    <input value={description} onChange={(e) => setDescription(e.target.value)} maxLength={50} required/>
 
                     <input type="submit" value="Submit" />
                 </form>
