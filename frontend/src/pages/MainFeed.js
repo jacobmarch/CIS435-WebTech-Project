@@ -1,10 +1,25 @@
-import React from "react";
-
+import React, { useState } from 'react';
+import { supabase } from '../App';
 
 const MainFeed = () => {
+     const [petitions, setPetitions] = useState([]);
+
      React.useEffect(() => {
           const originalStyle = window.getComputedStyle(document.body).overflow;
           document.body.style.overflow = 'hidden';
+
+          const fetchPetitions = async () => {
+               const {data, error} = await supabase
+                 .from('petitions')
+                 .select('*');
+
+               if (error) {
+                    console.error('error fetching petitions: ', error)
+               } else {
+                    setPetitions(data)
+               }
+          };
+          fetchPetitions();
 
           return () => {
                document.body.style.overflow = originalStyle;
@@ -30,33 +45,32 @@ const MainFeed = () => {
                          flexDirection: 'column',
                          alignItems: 'center'
                     }}>
-                         <PetitionCard />
-                         <PetitionCard />
-                         <PetitionCard />
-                         <PetitionCard />
-                         <PetitionCard />
-                         <PetitionCard />
-                         <PetitionCard />
+                         {petitions.map((petition) => (
+                              <PetitionCard 
+                                   key={petition.petitionid} 
+                                   title={petition.title} 
+                                   description={petition.description}
+                              />
+                         ))}
                     </div>
                </div>
           </div>
      );
 };
 
-const PetitionCard = () => {
-
+const PetitionCard = ({title, description}) => {
      const actionButtonStyles = {
-       background: 'black',
-       color: 'white',
-       padding: '10px 20px',
-       border: 'none',
-       cursor: 'pointer',
-       marginTop: '10px'
+          background: 'black',
+          color: 'white',
+          padding: '10px 20px',
+          border: 'none',
+          cursor: 'pointer',
+          marginTop: '10px'
      };
      
    return (
      <div className="petition-card" style={{
-         background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
+          background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
          color: 'black',
          marginBottom: '10px',
          padding: '20px',
@@ -64,14 +78,14 @@ const PetitionCard = () => {
          justifyContent: 'space-between',
          border: '1px solid black',
          }}>
-       <div className="petition-actions">
-         <button className="sign" style={actionButtonStyles}>Sign</button>
-         <button className="comments" style={actionButtonStyles}>Comment</button>
-       </div>
-       <div className="petition-info" >
-         <h3><u>Title</u></h3>
-         <p>This is a summary of the petition. It is a very useful and descriptive summary. I am so glad that this awesome website includes a summary to display for each petition.</p>
-       </div>
+          <div className="petition-actions">
+               <button className="sign" style={actionButtonStyles}>Sign</button>
+               <button className="comments" style={actionButtonStyles}>Comment</button>
+          </div>
+          <div className="petition-info" >
+               <h3><u>{title}</u></h3>
+               <p>{description}</p>
+          </div>
      </div>
    );
  };
