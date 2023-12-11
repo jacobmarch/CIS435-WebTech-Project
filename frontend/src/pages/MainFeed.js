@@ -33,7 +33,7 @@ const MainFeed = () => {
                     console.log(data)
                }
           };
-          const intervalId = setInterval(fetchPetitions, 10000); // 5000 milliseconds = 5 seconds
+          const intervalId = setInterval(fetchPetitions, 1000); // 5000 milliseconds = 5 seconds
 
           return () => {
                document.body.style.overflow = originalStyle;
