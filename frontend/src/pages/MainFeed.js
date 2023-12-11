@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { supabase } from '../App';
+import React, { useState, useEffect } from 'react';
+import { supabase, handleSignPetition, handleSubmitComment } from '../App';
 
 const MainFeed = () => {
-     const [petitions, setPetitions] = useState([]);
+    const [petitions, setPetitions] = useState([]);
+    const [comments, setComments] = useState([]); // Example state for comments
+    const [signedPetitions, setSignedPetitions] = useState([]); // Example state for signed petitions
 
-     React.useEffect(() => {
-          const originalStyle = window.getComputedStyle(document.body).overflow;
-          document.body.style.overflow = 'hidden';
-
-          const fetchPetitions = async () => {
-               const {data, error} = await supabase
-               .from('petitions')
-               .select(`
+    useEffect(() => {
+        // Fetch petitions and other data when the component mounts
+        const fetchPetitions = async () => {
+            const { data, error } = await supabase
+                .from('petitions')
+                .select(`
                     petitionid,
                     title,
                     description,
@@ -22,100 +22,133 @@ const MainFeed = () => {
                          profilepic,
                          name
                     )
-               `);
+                `);
 
-               if (error) {
-                    console.error('error fetching petitions: ', error)
-               } else {
-                    setPetitions(data)
-                    console.log(data)
-               }
-          };
-          fetchPetitions();
+            if (error) {
+                console.error('Error fetching petitions:', error);
+            } else {
+                setPetitions(data);
+            }
+        };
+        fetchPetitions();
+    }, []);
 
-          return () => {
-               document.body.style.overflow = originalStyle;
-          }
-     }, []);
+    const onSignPetition = async (petitionId) => {
+        const success = await handleSignPetition(petitionId);
+        if (success) {
+            console.log('Petition signed successfully');
+            // Update the UI by adding the petition to the signedPetitions state
+            setSignedPetitions((prevSignedPetitions) => [...prevSignedPetitions, petitionId]);
+        } else {
+            console.error('Error signing petition');
+        }
+    };
 
-     return (
-          <div className="main-feed-container" style={{
-               display: 'flex',
-               backgroundColor: 'white',
-               height: '100vh',
-               overflow: 'hidden'
-          }}>
-               
-               <div className="petitions-container" style={{ flexGrow: '1', overflowY: 'hidden', background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)', color: 'white' }}>
-                    <h2>Main Petition Feed</h2>
-                    <div className="petition-list" style={{
-                         overflowY: 'auto', // Enable scrolling
-                         maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
-                         display: 'flex',
-                         padding: '20px',
-                         marginRight: '20px',
-                         flexDirection: 'column',
-                         alignItems: 'center'
-                    }}>
-                         {petitions.map((petition) => (
-                              <PetitionCard 
-                                   key={petition.petitionid} 
-                                   title={petition.title} 
-                                   description={petition.description}
-                                   imageUrl={petition.users.profilepic || '/profile-default.png'}
-                                   user={petition.users.name}
-                              />
-                         ))}
-                    </div>
-               </div>
-          </div>
-     );
+    const onSubmitComment = async (petitionId, comment) => {
+        const success = await handleSubmitComment(petitionId, comment);
+        if (success) {
+            console.log('Comment submitted successfully');
+            // Update the UI by adding the comment to the comments state
+            setComments((prevComments) => [...prevComments, { petitionId, text: comment }]);
+        } else {
+            console.error('Error submitting comment');
+        }
+    };
+
+    return (
+        <div className="main-feed-container">
+            <div className="petitions-container">
+                <h2 className="main-feed-title">Main Petition Feed</h2>
+                <div className="petition-list">
+                    {petitions.map((petition) => (
+                        <PetitionCard
+                            key={petition.petitionid}
+                            title={petition.title}
+                            description={petition.description}
+                            imageUrl={petition.users.profilepic || '/profile-default.png'}
+                            user={petition.users.name}
+                            onSign={() => onSignPetition(petition.petitionid)}
+                            onComment={(comment) => onSubmitComment(petition.petitionid, comment)}
+                            isSigned={signedPetitions.includes(petition.petitionid)} // Check if the petition is signed
+                            comments={comments.filter((c) => c.petitionId === petition.petitionid)} // Filter comments for this petition
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 };
 
-const PetitionCard = ({title, description, imageUrl, user}) => {
-     const actionButtonStyles = {
-          background: 'black',
-          color: 'white',
-          padding: '10px 15px',
-          border: 'none',
-          cursor: 'pointer',
-          borderRadius: '15px',
-          marginRight: '10px'
-     };
-     
-   return (
-     <div className="petition-card" style={{
-          background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
-          color: 'black',
-          marginBottom: '10px',
-          padding: '20px',
-          display: 'flex',
-          alignItems: 'center',
-          border: '1px solid black',
-          borderRadius: '10px',
-        }}>
-          <img src={imageUrl} alt="Profile" style={{
-            width: '100px',
-            height: '100px',
-            borderRadius: '50%',
-            marginRight: '20px',
-          }} />
-          <div className="container">
-            <div className="username-container">
-              <h3>{user}</h3>
+const PetitionCard = ({
+    title,
+    description,
+    imageUrl,
+    user,
+    onSign,
+    onComment,
+    isSigned,
+    comments,
+}) => {
+    const actionButtonStyles = {
+        background: 'black',
+        color: 'white',
+        padding: '10px 15px',
+        border: 'none',
+        cursor: 'pointer',
+        borderRadius: '15px',
+        marginRight: '10px',
+    };
+
+    return (
+        <div className="petition-card">
+            <img
+                src={imageUrl}
+                alt="Profile"
+                className="profile-image" // CSS class for profile image
+            />
+            <div className="container">
+                <div className="username-container">
+                    <h3 className="username">{user}</h3>
+                </div>
+                <div className="petition-actions">
+                    <button
+                        className={`sign-button ${isSigned ? 'signed' : ''}`} // Apply 'signed' class when signed
+                        style={actionButtonStyles}
+                        onClick={onSign}
+                        disabled={isSigned}
+                    >
+                        {isSigned ? 'Signed' : 'Sign'}
+                    </button>
+
+                    <button
+                        className="comment-button" // CSS class for comment button
+                        style={actionButtonStyles}
+                        onClick={() => {
+                            const comment = prompt('Enter your comment:');
+                            if (comment) {
+                                onComment(comment);
+                            }
+                        }}
+                    >
+                        Comment
+                    </button>
+                </div>
             </div>
-            <div className="petition-actions">
-              <button className="sign" style={actionButtonStyles}>Sign</button>
-              
-              <button className="comments" style={actionButtonStyles}>Comment</button>
+            <div className="petition-info">
+                <h3 className="petition-title">
+                    <u>{title}</u>
+                </h3>
+                <p className="petition-description">{description}</p>
+                <div className="comments-section">
+                    {comments.map((comment, index) => (
+                        <div key={index} className="comment">
+                            <strong>{comment.user}:</strong> {comment.text}
+                        </div>
+                    ))}
+                </div>
             </div>
-          </div>
-          <div className="petition-info" style={{ marginLeft: '20px' }}>
-            <h3><u>{title}</u></h3>
-            <p>{description}</p>
-          </div>
-     </div>
-   );
- };
+        </div>
+    );
+};
 
 export default MainFeed;
