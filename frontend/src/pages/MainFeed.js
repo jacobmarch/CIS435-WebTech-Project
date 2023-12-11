@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from "react";
+import Popup from "../components/Popup";
+import { useState} from 'react';
 import { supabase } from '../App';
+
 
 const MainFeed = () => {
      const [petitions, setPetitions] = useState([]);
-
      React.useEffect(() => {
           const originalStyle = window.getComputedStyle(document.body).overflow;
           document.body.style.overflow = 'hidden';
@@ -37,6 +39,8 @@ const MainFeed = () => {
                document.body.style.overflow = originalStyle;
           }
      }, []);
+     {/* variables for popup */}
+     const [buttonPopup, setButtonPopup] = useState (false);
 
      return (
           <div className="main-feed-container" style={{
@@ -47,7 +51,15 @@ const MainFeed = () => {
           }}>
                
                <div className="petitions-container" style={{ flexGrow: '1', overflowY: 'hidden', background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)', color: 'white' }}>
-                    <h2>Main Petition Feed</h2>
+                    {/* ADD button for petition  */}
+                    
+                    <div className= "New_petition_button" style={{ width:'86.5%', display: 'flex', justifyContent:'flex-end'}}>
+                     <button onClick={()=> setButtonPopup(true)} style={{  borderRadius: '15px',width:'100px', height:'40px', }} >NEW</button>    
+                     <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                         
+                     </Popup>
+                    </div>
+
                     <div className="petition-list" style={{
                          overflowY: 'auto', // Enable scrolling
                          maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
@@ -74,13 +86,14 @@ const MainFeed = () => {
 
 const PetitionCard = ({title, description, imageUrl, user}) => {
      const actionButtonStyles = {
-          background: 'black',
-          color: 'white',
-          padding: '10px 15px',
-          border: 'none',
-          cursor: 'pointer',
-          borderRadius: '15px',
-          marginRight: '10px'
+       background: 'black',
+       color: 'white',
+       padding: '10px 20px',
+       border: 'none',
+       cursor: 'pointer',
+       marginTop: '10px',
+       borderRadius: '20px',
+       margin: '5px'
      };
      
    return (
