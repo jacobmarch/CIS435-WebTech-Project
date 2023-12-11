@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { supabase } from "../App";
-import petitionCard from "../components/PetitionCard";
+import petitionCard from "../components/Petition";
 
 const SearchResults = () => {
   const location = useLocation();
