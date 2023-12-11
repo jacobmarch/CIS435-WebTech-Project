@@ -7,3 +7,5 @@ After installing both of those, open a terminal in this folder and run the follo
     1. $ cd frontend
     2. $ npm install
     3. $ npm start -> This launches the dev server for your local if the installation is done right.
+
+Live Build is available at this address: https://cis-435-web-tech-project.vercel.app/
