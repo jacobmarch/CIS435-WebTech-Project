@@ -21,7 +21,7 @@ const MainFeed = () => {
                
                <div className="petitions-container" style={{ flexGrow: '1', overflowY: 'hidden', background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)', color: 'white' }}>
                     <h2>Main Petition Feed</h2>
-                    <div className="petitions-list" style={{
+                    <div className="petition-list" style={{
                          overflowY: 'auto', // Enable scrolling
                          maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
                          display: 'flex',
@@ -46,38 +46,34 @@ const MainFeed = () => {
 const PetitionCard = () => {
 
      const actionButtonStyles = {
-          background: 'black',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          cursor: 'pointer',
-          marginTop: '10px',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '250px'
+       background: 'black',
+       color: 'white',
+       padding: '10px 20px',
+       border: 'none',
+       cursor: 'pointer',
+       marginTop: '10px'
      };
-
-     return (
-          <div className="petition-card" style={{
-               background: 'white',
-               color: 'black',
-               marginBottom: '10px',
-               padding: '20px',
-               display: 'flex',
-               justifyContent: 'space-between',
-               border: '1px solid black',
-               width: '80%',
-          }}>
-               <div className="petition-actions">
-                    <button className="sign" style={actionButtonStyles}>Sign</button>
-                    <button className="comments" style={actionButtonStyles}>Comment</button>
-               </div>
-               <div className="petition-info" > 
-                    <h3><u>Title</u></h3>
-                    <p>This is a summary of the petition. It is a very useful and descriptive summary. I am so glad that this awesome website includes a summary to display for each petition.</p>
-               </div>
-          </div>
-     );
-};
+     
+   return (
+     <div className="petition-card" style={{
+         background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
+         color: 'black',
+         marginBottom: '10px',
+         padding: '20px',
+         display: 'flex',
+         justifyContent: 'space-between',
+         border: '1px solid black',
+         }}>
+       <div className="petition-actions">
+         <button className="sign" style={actionButtonStyles}>Sign</button>
+         <button className="comments" style={actionButtonStyles}>Comment</button>
+       </div>
+       <div className="petition-info" >
+         <h3><u>Title</u></h3>
+         <p>This is a summary of the petition. It is a very useful and descriptive summary. I am so glad that this awesome website includes a summary to display for each petition.</p>
+       </div>
+     </div>
+   );
+ };
 
 export default MainFeed;

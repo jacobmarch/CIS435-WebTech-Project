@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { supabase } from '../App';
 
 /**
- * Renders the sign-up page component.
+ * Renders the Login page component.
  *
- * @return {JSX.Element} The sign-up page component.
+ * @return {JSX.Element} The Login page component.
  */
 const LoginPage = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        const { user, session, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (error) {
+            setError(error.message);
+        } else {
+            // Redirect or perform any action after successful login
+            console.log('User logged in:', user, session);
+            setIsLoggedIn(true);
+        }
+        setLoading(false);
+    };
+
     return (
         <div className='SignUpContainer' style={{
             display: 'flex',
@@ -30,7 +58,8 @@ const LoginPage = () => {
                 padding: '2%',
             }}>
 
-                <form style={{
+                <form onSubmit={handleLogin} 
+                    style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -42,11 +71,25 @@ const LoginPage = () => {
                         <img src="/user_alt.svg" alt="profile" style={{ border:'none',height: '161px', width: '165px', display: 'block', margin: 'auto' }} />
                     </div>
 
-                    <input placeholder="Username" style={inputStyle} />
-                    <input placeholder="Password" type="password" style={inputStyle} />
-                    <button style={buttonStyle}>Login</button>
+                    <input
+                        placeholder="Email"
+                        type="email"
+                        style={inputStyle}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        placeholder="Password"
+                        type="password"
+                        style={inputStyle}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type="submit" disabled={loading} style={buttonStyle}>
+                        {loading ? 'Loading...' : 'Login'}
+                    </button>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                     <label style={{ color: 'white', marginBottom: '20px' }}>or you can login with</label>
-
                     <div style={{ display: 'flex', width: '120px', height: '48px', justifyContent: 'space-between' }}>
                         <button style={{
                             width: '48px',
@@ -75,11 +118,6 @@ const LoginPage = () => {
                             <img src="/logo-apple.svg" alt="Apple" style={{ width: '70%', height: '85%' }} />
                         </button>
                     </div>
-
-
-
-
-
                 </form>
             </div>
         </div>

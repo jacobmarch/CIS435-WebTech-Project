@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 import Header from './components/Header';
@@ -15,7 +15,13 @@ const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
 const supabase = createClient(supabaseURL, supabaseAnonKey);
 
+export { supabase };
+
 function App() {
+    useEffect(() => {
+        document.title = 'Dearborn Voice';
+    })
+
     return (
             <div className="App">
                 <Header/>
