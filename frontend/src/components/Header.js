@@ -26,7 +26,7 @@ const Header = () => {
 
 
   {/* Center section: Search bar */}
-  <div style={{ flex: 1, paddingLeft: '20px', paddingRight: '20px'}}>
+  <div style={{ flex: 1, paddingLeft: '150px', paddingRight: '0px'}}>
     <input
       type="text"
       placeholder="Search..."
@@ -40,7 +40,7 @@ const Header = () => {
         fontFamily: 'inherit',
         fontSize: '20px',
         outline: '0',
-        marginRight:'225px'
+        marginRight:'95px'
 
       }}
     />
