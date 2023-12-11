@@ -47,10 +47,12 @@ const Header = () => {
 
 
     {/* Center section: Search bar */}
+    {isLoggedIn ? (
     <div style={{ flex: 1, paddingLeft: '20px', paddingRight: '20px'}}>
       <input
         type="text"
         placeholder="Search..."
+        id="search-input"
         style={{
           width: '40%', // Adjusted to take the full width of the parent div
           padding: '10px',
@@ -65,7 +67,11 @@ const Header = () => {
         }}
         onSubmit={handleSearch}
       />
-    </div>
+    </div>) : (
+      <div>
+
+      </div>
+    )}
 
       {/* Right section: Icons */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -77,9 +83,9 @@ const Header = () => {
         {/* Dropdown Menu */}
         {menuOpen && (
           <div style={{ position: 'absolute', right: '20px', top: '70px', backgroundColor: 'darkgray', borderRadius: '5px', padding: '10px', zIndex: '100' }}>
-            <Link to="/" className='menu-link'>Home</Link>
             {isLoggedIn ? (
               <>
+                <Link to="/" className='menu-link'>Home</Link>
                 <Link to="/Settings" className='menu-link'>Settings</Link>
                 <Link to="/UserProfile" className='menu-link'>User Profile</Link>
                 <Link to="/Logout" className='menu-link'>Logout</Link>

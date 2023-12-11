@@ -147,6 +147,7 @@ const buttonStyle = {
     boxSizing: 'border-box',
     color: 'white',
     cursor: 'pointer',
+    fontSize: '20px',
 };
 
 export default SignUpPage;
