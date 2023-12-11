@@ -41,7 +41,7 @@ const Header = () => {
       {/* Left section: Logo and Title */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
         < Link to="/">
-          <img src="/DearbornVoice.png" alt="Logo" style={{ marginRight: '10px', height: '40px', width: '70px' }} />
+          <img src="/DearbornVoice2.png" alt="Logo" style={{ height: '75px', width: '100px' }} />
         </Link>
       </div>
 
