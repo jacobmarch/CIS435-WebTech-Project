@@ -67,7 +67,7 @@ const [petitions, setPetitions] = useState([]);
                          padding: '20px',
                          marginRight: '20px',
                          flexDirection: 'column',
-                         alignItems: 'center'
+                         alignItems: 'center',
                     }}>
                          {petitions.map((petition) => (
                               <PetitionCard 
@@ -106,6 +106,7 @@ const PetitionCard = ({title, description, imageUrl, user}) => {
           alignItems: 'center',
           border: '1px solid black',
           borderRadius: '10px',
+          minWidth: '75vw'
         }}>
           <img src={imageUrl} alt="Profile" style={{
             width: '100px',

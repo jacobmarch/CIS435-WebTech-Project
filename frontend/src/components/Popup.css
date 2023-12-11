@@ -18,7 +18,7 @@
     background-color: #FFF;
     height: 50%;
     border-radius: 30px;
-    color: blue;
+    color: black;
 }
 
 .popup-inner .close-btn {
@@ -66,8 +66,8 @@
 .popup-form input[type="text"]:focus,
 .popup-form input[type="email"]:focus,
 .popup-form input[type="password"]:focus {
-    border-color: #007aff;
-    box-shadow: 0 0 8px rgba(0, 122, 255, 0.5);
+    border-color: black;
+    box-shadow: 0 0 8px rgba(73, 86, 100, 0.5);
     outline: none;
 }
 
@@ -78,7 +78,7 @@
     border: none;
     border-radius: 8px;
     color: white;
-    background-color: #007aff;
+    background-color: black;
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 16px;
@@ -87,5 +87,5 @@
 }
 
 .popup-form input[type="submit"]:hover {
-    background-color: #005ecb;
+    background-color: rgb(73, 86, 100);
 }
