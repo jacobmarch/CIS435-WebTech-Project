@@ -19,7 +19,8 @@ const MainFeed = () => {
                     categoryid,
                     users!inner (
                          userid,
-                         profilepic
+                         profilepic,
+                         name
                     )
                `);
 
@@ -62,6 +63,7 @@ const MainFeed = () => {
                                    title={petition.title} 
                                    description={petition.description}
                                    imageUrl={petition.users.profilepic || '/profile-default.png'}
+                                   user={petition.users.name}
                               />
                          ))}
                     </div>
@@ -70,39 +72,47 @@ const MainFeed = () => {
      );
 };
 
-const PetitionCard = ({title, description, imageUrl}) => {
+const PetitionCard = ({title, description, imageUrl, user}) => {
      const actionButtonStyles = {
           background: 'black',
           color: 'white',
-          padding: '10px 20px',
+          padding: '10px 15px',
           border: 'none',
           cursor: 'pointer',
-          marginTop: '10px'
+          borderRadius: '15px',
+          marginRight: '10px'
      };
      
    return (
      <div className="petition-card" style={{
           background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
-         color: 'black',
-         marginBottom: '10px',
-         padding: '20px',
-         display: 'flex',
-         justifyContent: 'space-between',
-         border: '1px solid black',
-         }}>
+          color: 'black',
+          marginBottom: '10px',
+          padding: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          border: '1px solid black',
+          borderRadius: '10px',
+        }}>
           <img src={imageUrl} alt="Profile" style={{
-               width: '100px',
-               height: '100px',
-               marginRight: '20px',
-               borderRadius: '50%',
+            width: '100px',
+            height: '100px',
+            borderRadius: '50%',
+            marginRight: '20px',
           }} />
-          <div className="petition-actions">
-               <button className="sign" style={actionButtonStyles}>Sign</button>
-               <button className="comments" style={actionButtonStyles}>Comment</button>
+          <div className="container">
+            <div className="username-container">
+              <h3>{user}</h3>
+            </div>
+            <div className="petition-actions">
+              <button className="sign" style={actionButtonStyles}>Sign</button>
+              
+              <button className="comments" style={actionButtonStyles}>Comment</button>
+            </div>
           </div>
-          <div className="petition-info" >
-               <h3><u>{title}</u></h3>
-               <p>{description}</p>
+          <div className="petition-info" style={{ marginLeft: '20px' }}>
+            <h3><u>{title}</u></h3>
+            <p>{description}</p>
           </div>
      </div>
    );
