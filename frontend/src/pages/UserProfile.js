@@ -164,8 +164,8 @@ const UserProfile = () => {
            alignItems: 'center',
            border: '1px solid black',
            borderRadius: '10px',
-           minWidth: '75vw',
-           maxWidth: '75vw'
+           minWidth: '65vw',
+           maxWidth: '65vw'
          }}>
            <img src={imageUrl} alt="Profile" style={{
              width: '100px',
@@ -178,9 +178,6 @@ const UserProfile = () => {
                <h3>{user}</h3>
              </div>
              <div className="petition-actions">
-               <button className="sign" style={actionButtonStyles}>Sign</button>
-               
-               <button className="comments" style={actionButtonStyles}>Comment</button>
              </div>
            </div>
            <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
