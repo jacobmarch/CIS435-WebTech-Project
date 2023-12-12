@@ -10,6 +10,7 @@ const SignUpPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -24,13 +25,29 @@ const SignUpPage = () => {
             password: password,
         });
 
-        if (error) {
-            setError(error.message);
-        } else {
-            // You can handle the successful sign-up case here
-            console.log('User signed up:', user);
-            // Redirect the user or show a success message
+        const userInfo = await supabase.auth.getUser();
+
+        if (userInfo){
+            try {    
+                const { data, error } = await supabase
+                    .from('users')
+                    .insert({
+                    name: name, userID: (await supabase.auth.getUser()).data.user.id
+                });
+
+                if (error) {
+                    setError(error.message);
+                } else {
+                    // You can handle the successful sign-up case here
+                    console.log('User data added:', data);
+                    // Redirect the user or show a success message
+                }
+            } catch (err) {
+                setError(err.message);
+                console.error('Error adding user data:', err.message);
+            }
         }
+        
         setLoading(false);
     };
 
@@ -69,6 +86,13 @@ const SignUpPage = () => {
                     <div style={{ background: '#FFF', width: '200px', height: '200px', borderRadius: '50%', marginBottom: '25px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <img src="/user_alt.svg" alt="profile" style={{ border:'none',height: '161px', width: '165px', display: 'block', margin: 'auto' }} />
                     </div>
+                    <input
+                        placeholder="Name"
+                        type="text"
+                        style={inputStyle}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
                     <input
                         placeholder="Email"
                         type="email"
