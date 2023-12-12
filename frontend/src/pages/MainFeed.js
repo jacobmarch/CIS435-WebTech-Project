@@ -3,8 +3,32 @@ import Popup from "../components/Popup";
 import { useState } from 'react';
 import { supabase } from '../App';
 
+const handleSignPetition = async (petitionId) => {
+  try {
+    const user = supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("User must be logged in to sign");
+    }
+
+    const { data, error } = await supabase
+      .from('signatures')
+      .insert([
+        { userID: (await user).data.user.id, petitionID: petitionId }
+      ]);
+    if (error) {
+      throw error;
+    }
+
+    console.log('Petition signed:', data);
+    // Further actions like updating UI or state
+  } catch (error) {
+    console.error('Error signing petition:', error.message);
+  }
+};
 
 const MainFeed = () => {
+  
      const urlParams = new URLSearchParams(window.location.search);
      const query = urlParams.get('query');
      const [petitions, setPetitions] = useState([]);
@@ -97,11 +121,12 @@ const MainFeed = () => {
                     }}>
                          {petitions.map((petition) => (
                               <PetitionCard 
-                                   key={petition.petitionid} 
-                                   title={petition.title} 
-                                   description={petition.description}
-                                   imageUrl={petition.users.profilepic || '/profile-default.png'}
-                                   user={petition.users.name}
+                                  key={petition.petitionid} 
+                                  petitionID={petition.petitionid}
+                                  title={petition.title} 
+                                  description={petition.description}
+                                  imageUrl={petition.users.profilepic || '/profile-default.png'}
+                                  user={petition.users.name}
                               />
                          ))}
                     </div>
@@ -110,7 +135,7 @@ const MainFeed = () => {
      );
 };
 
-const PetitionCard = ({title, description, imageUrl, user}) => {
+const PetitionCard = ({petitionID, title, description, imageUrl, user}) => {
      const actionButtonStyles = {
           background: 'black',
           color: 'white',
@@ -146,7 +171,7 @@ const PetitionCard = ({title, description, imageUrl, user}) => {
               <h3>{user}</h3>
             </div>
             <div className="petition-actions">
-              <button className="sign" style={actionButtonStyles}>Sign</button>
+              <button className="sign" style={actionButtonStyles} onClick={() => handleSignPetition(petitionID)}>Sign</button>
               
               <button className="comments" style={actionButtonStyles}>Comment</button>
             </div>
