@@ -69,6 +69,7 @@ const MainFeed = () => {
                          )
                     `)
                     .ilike('description', `%${query}%`)
+                    .order('petitionid', { ascending: false });
                     if (error) {
                          console.error('error fetching petitions: ', error)
                     } else {
@@ -90,7 +91,8 @@ const MainFeed = () => {
                               profilepic,
                               name
                          )
-                    `);
+                    `)
+                    .order('petitionid', { ascending: false });
                     if (error) {
                          console.error('error fetching petitions: ', error)
                     } else {
