@@ -12,6 +12,21 @@ const handleSignPetition = async (petitionId) => {
       throw new Error("User must be logged in to sign");
     }
 
+    const { data: existingSignature, error: checkError } = await supabase
+      .from('signatures')
+      .select('*')
+      .eq('userID', (await user).data.user.id)
+      .eq('petitionID', petitionId);
+
+    if (checkError) {
+      throw checkError;
+    }
+
+    if (existingSignature.length > 0) {
+      alert('You have already signed this petition');
+      return;
+    }
+    
     const { data, error } = await supabase
       .from('signatures')
       .insert([
