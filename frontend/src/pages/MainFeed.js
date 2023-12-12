@@ -2,7 +2,31 @@ import React from "react";
 import Popup from "../components/Popup";
 import { useState } from 'react';
 import { supabase } from '../App';
+import CommentsPopup from "../components/CommentsPopup";
 
+const handleSignPetition = async (petitionId) => {
+  try {
+    const user = supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("User must be logged in to sign");
+    }
+
+    const { data, error } = await supabase
+      .from('signatures')
+      .insert([
+        { userID: (await user).data.user.id, petitionID: petitionId }
+      ]);
+    if (error) {
+      throw error;
+    }
+
+    console.log('Petition signed:', data);
+    // Further actions like updating UI or state
+  } catch (error) {
+    console.error('Error signing petition:', error.message);
+  }
+};
 
 const MainFeed = () => {
      const urlParams = new URLSearchParams(window.location.search);
