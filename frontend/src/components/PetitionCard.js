@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from './supabaseClient'; // Ensure you have your Supabase client correctly set up
 
-const Petition = ({ petitionID, userID }) => {
+const PetitionCard = ({ petitionID, userID }) => {
   const [signaturesCount, setSignaturesCount] = useState(0);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -67,10 +68,10 @@ const Petition = ({ petitionID, userID }) => {
   const toggleComments = () => setShowComments(!showComments);
 
   return (
-    <div className="petition-container">
-      {/* JSX for the Petition component */}
+    <div className="petition-card">
+      {/* JSX for the PetitionCard component */}
     </div>
   );
 };
 
-export default Petition;
+export default PetitionCard;

@@ -1,162 +1,133 @@
-import React from "react";
-import Popup from "../components/Popup";
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../App';
-
+import PetitionCard from '../components/PetitionCard';
 
 const MainFeed = () => {
-     const urlParams = new URLSearchParams(window.location.search);
-     const query = urlParams.get('query');
-     const [petitions, setPetitions] = useState([]);
-     React.useEffect(() => {
-          const originalStyle = window.getComputedStyle(document.body).overflow;
-          document.body.style.overflow = 'hidden';
+  const [petitions, setPetitions] = useState([]);
+  const [buttonPopup, setButtonPopup] = useState(false);
 
-          const fetchPetitions = async () => {
-               if (query){
-                    const {data, error} = await supabase
-                    .from('petitions')
-                    .select(`
-                         petitionid,
-                         title,
-                         description,
-                         createdUserID,
-                         categoryid,
-                         users!inner (
-                              userID,
-                              profilepic,
-                              name
-                         )
-                    `)
-                    .ilike('description', `%${query}%`)
-                    if (error) {
-                         console.error('error fetching petitions: ', error)
-                    } else {
-                         setPetitions(data)
-                         console.log(data)
-                    }
-               }
-               else {
-                    const {data, error} = await supabase
-                    .from('petitions')
-                    .select(`
-                         petitionid,
-                         title,
-                         description,
-                         createdUserID,
-                         categoryid,
-                         users!inner (
-                              userID,
-                              profilepic,
-                              name
-                         )
-                    `);
-                    if (error) {
-                         console.error('error fetching petitions: ', error)
-                    } else {
-                         setPetitions(data)
-                         console.log(data)
-                    }
-               }
-          };
-          const intervalId = setInterval(fetchPetitions, 5000); // 5000 milliseconds = 5 seconds
+  useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
 
-          return () => {
-               document.body.style.overflow = originalStyle;
-          }
-     }, []);
-     {/* variables for popup */ }
-     const [buttonPopup, setButtonPopup] = useState(false);
+    const fetchPetitions = async () => {
+      const { data, error } = await supabase
+        .from('petitions')
+        .select(`
+          petitionid,
+          title,
+          description,
+          createduserid,
+          categoryid,
+          users!inner (
+            userid,
+            profilepic,
+            name
+          )
+        `);
 
-     return (
-          <div className="main-feed-container" style={{
-               display: 'flex',
-               backgroundColor: 'white',
-               height: '100vh',
-               overflow: 'hidden'
-          }}>
+      if (error) {
+        console.error('Error fetching petitions:', error);
+      } else {
+        setPetitions(data);
+      }
+    };
 
-               <div className="petitions-container" style={{ flexGrow: '1', overflowY: 'hidden', background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)', color: 'white' }}>
-                    {/* ADD button for petition  */}
+    fetchPetitions();
 
-                    <div className="New_petition_button" style={{ width: '86.5%', display: 'flex', justifyContent: 'flex-end' }}>
-                         <button onClick={() => setButtonPopup(true)} style={{ borderRadius: '15px', width: '100px', height: '40px', }} >NEW</button>
-                         <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-                             
-                         </Popup>
-                    </div>
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
 
-                    <div className="petition-list" style={{
-                         overflowY: 'auto', // Enable scrolling
-                         maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
-                         display: 'flex',
-                         padding: '20px',
-                         marginRight: '20px',
-                         flexDirection: 'column',
-                         alignItems: 'center',
-                    }}>
-                         {petitions.map((petition) => (
-                              <PetitionCard 
-                                   key={petition.petitionid} 
-                                   title={petition.title} 
-                                   description={petition.description}
-                                   imageUrl={petition.users.profilepic || '/profile-default.png'}
-                                   user={petition.users.name}
-                              />
-                         ))}
-                    </div>
-               </div>
-          </div>
-     );
+  const handleSignPetition = async (petitionId) => {
+    const user = supabase.auth.user();
+
+    if (user) {
+      // Check if the user has already signed the petition
+      const { data: existingSignatures, error: signatureError } = await supabase
+        .from('signatures')
+        .select('petitionid')
+        .eq('userid', user.id)
+        .eq('petitionid', petitionId);
+
+      if (signatureError) {
+        console.error('Error checking existing signature:', signatureError);
+        return;
+      }
+
+      if (existingSignatures.length > 0) {
+        console.log(`You have already signed this petition with ID: ${petitionId}`);
+      } else {
+        // Insert a new signature
+        const { data: newSignature, error: insertError } = await supabase
+          .from('signatures')
+          .insert([
+            {
+              petitionid: petitionId,
+              userid: user.id,
+            },
+          ]);
+
+        if (insertError) {
+          console.error('Error signing the petition:', insertError);
+        } else {
+          console.log(`Signed petition with ID: ${petitionId}`);
+        }
+      }
+    }
+  };
+
+  const handleCommentPetition = async (petitionId) => {
+    const user = supabase.auth.user();
+
+    if (user) {
+      // Implement logic to add a comment to the petition
+      // You can use Supabase or your preferred backend service here
+      const commentText = 'This is a test comment. Replace with user input.';
+      const { data: newComment, error: commentError } = await supabase
+        .from('comments')
+        .insert([
+          {
+            petitionid: petitionId,
+            userid: user.id,
+            text: commentText,
+          },
+        ]);
+
+      if (commentError) {
+        console.error('Error adding a comment:', commentError);
+      } else {
+        console.log(`Commented on petition with ID: ${petitionId}`);
+      }
+    }
+  };
+
+  return (
+    <div className="main-feed-container" style={{ display: 'flex', backgroundColor: 'white', height: '100vh', overflow: 'hidden' }}>
+      <div className="petition-list" style={{
+        overflowY: 'auto',
+        maxHeight: 'calc(100vh - 200px)',
+        display: 'flex',
+        padding: '20px',
+        marginRight: '20px',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}>
+        {petitions.map((petition) => (
+          <PetitionCard
+            key={petition.petitionid}
+            title={petition.title}
+            description={petition.description}
+            imageUrl={petition.users.profilepic || '/profile-default.png'}
+            user={petition.users.name}
+            onSign={() => handleSignPetition(petition.petitionid)}
+            onComment={() => handleCommentPetition(petition.petitionid)}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
-
-const PetitionCard = ({title, description, imageUrl, user}) => {
-     const actionButtonStyles = {
-          background: 'black',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          cursor: 'pointer',
-          marginTop: '10px',
-          borderRadius: '20px',
-          margin: '5px'
-     };
-     
-   return (
-     <div className="petition-card" style={{
-          background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
-          color: 'black',
-          marginBottom: '10px',
-          padding: '20px',
-          display: 'flex',
-          alignItems: 'center',
-          border: '1px solid black',
-          borderRadius: '10px',
-          minWidth: '75vw',
-          maxWidth: '75vw'
-        }}>
-          <img src={imageUrl} alt="Profile" style={{
-            width: '100px',
-            height: '100px',
-            borderRadius: '50%',
-            marginRight: '20px',
-          }} />
-          <div className="container">
-            <div className="username-container">
-              <h3>{user}</h3>
-            </div>
-            <div className="petition-actions">
-              <button className="sign" style={actionButtonStyles}>Sign</button>
-              
-              <button className="comments" style={actionButtonStyles}>Comment</button>
-            </div>
-          </div>
-          <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
-            <h3><u>{title}</u></h3>
-            <p>{description}</p>
-          </div>
-     </div>
-   );
- };
 
 export default MainFeed;
