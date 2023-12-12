@@ -8,12 +8,14 @@ function Popup(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const user = (await supabase.auth.getUser()).data.user.id;
+        const category = 1;
 
         // Insert data into the Supabase database
         const { data, error } = await supabase
             .from('petitions')
             .insert([
-                { title, description }
+                { title, description, createdUserID: user, categoryid: category }
             ]);
 
         if (error) {
