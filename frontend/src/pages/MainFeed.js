@@ -99,12 +99,13 @@ const MainFeed = () => {
                     }}>
                          {petitions.map((petition) => (
                               <PetitionCard 
-                                   key={petition.petitionid} 
-                                   title={petition.title} 
-                                   description={petition.description}
-                                   imageUrl={petition.users.profilepic || '/profile-default.png'}
-                                   user={petition.users.name}
-                                   signCount={petition.signcount}
+                                  key={petition.petitionid} 
+                                  petitionID={petition.petitionid}
+                                  title={petition.title} 
+                                  description={petition.description}
+                                  imageUrl={petition.users.profilepic || '/profile-default.png'}
+                                  user={petition.users.name}
+                                  signCount={petition.signcount}
                               />
                          ))}
                     </div>
@@ -113,7 +114,8 @@ const MainFeed = () => {
      );
 };
 
-const PetitionCard = ({title, description, imageUrl, user, signCount}) => {
+const PetitionCard = ({petitionID, title, description, imageUrl, user, signCount}) => {
+  const [showCommentsPopup, setShowCommentsPopup] = useState(false);
      const actionButtonStyles = {
           background: 'black',
           color: 'white',
@@ -150,8 +152,14 @@ const PetitionCard = ({title, description, imageUrl, user, signCount}) => {
             </div>
             <h4>{signCount} supporter(s)!</h4>
             <div className="petition-actions">
-              <button className="sign" style={actionButtonStyles}>Sign</button>
-              <button className="comments" style={actionButtonStyles}>Comment</button>
+              <button className="sign" style={actionButtonStyles} onClick={() => handleSignPetition(petitionID)}>Sign</button>
+              
+              <button className="comments" style={actionButtonStyles} onClick={() => setShowCommentsPopup(true)}>Comment</button>
+              <CommentsPopup 
+                trigger={showCommentsPopup} 
+                setTrigger={setShowCommentsPopup} 
+                petitionId={petitionID}
+              />
             </div>
           </div>
           <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
