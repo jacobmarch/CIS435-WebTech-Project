@@ -38,6 +38,7 @@
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
+    margin-bottom: '10px';
 }
 
 /* Style for each label */
@@ -49,34 +50,13 @@
     font-weight: 500;
 }
 
-/* Style for each input field */
-.popup-form input[type="text"],
-.popup-form input[type="email"],
-.popup-form input[type="password"] {
-    width: calc(100% - 20px);
-    padding: 15px;
-    margin-bottom: 25px;
-    border: 2px solid #ccc;
-    border-radius: 12px;
-    box-sizing: border-box;
-    font-size: 14px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.popup-form input[type="text"]:focus,
-.popup-form input[type="email"]:focus,
-.popup-form input[type="password"]:focus {
-    border-color: black;
-    box-shadow: 0 0 8px rgba(73, 86, 100, 0.5);
-    outline: none;
-}
 
 /* Style for the submit button */
 .popup-form input[type="submit"] {
     width: calc(100% - 20px);
     padding: 15px;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
     color: white;
     background-color: black;
     cursor: pointer;
@@ -87,5 +67,5 @@
 }
 
 .popup-form input[type="submit"]:hover {
-    background-color: rgb(73, 86, 100);
+    background-color: rgb(51, 51, 51);
 }
