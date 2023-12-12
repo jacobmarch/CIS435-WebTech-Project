@@ -1,10 +1,74 @@
 import React from 'react';
+import { useState } from 'react';
+import { supabase } from '../App';
 
 const UserProfile = () => {
-
+  const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState('');
+  const [petitions, setPetitions] = useState([]);
+  
     React.useEffect(() => {
         const originalStyle = window.getComputedStyle(document.body).overflow;
         document.body.style.overflow = 'hidden';
+
+        const fetchUserData = async () => {
+          try {
+            const { user, session, error } = supabase.auth.session();
+    
+            if (error) {
+              throw error;
+            }
+    
+            if (user && session) {
+              const currentUserId = user.userID;
+    
+              
+              const { data, error: userError } = await supabase
+                .from('users')
+                .select('name')
+                .eq('userID', currentUserId)
+                .single();
+    
+              if (userError) {
+                throw userError;
+              }
+    
+              // Update state with the user's name and ID
+              setUserName(data.name);
+              setUserId(currentUserId);
+            }
+          } catch (error) {
+            console.error('Error fetching user data:', error.message);
+          }
+        };
+    
+        fetchUserData();
+
+        const fetchPetitions = async () => {
+          const {data, error} = await supabase
+          .from('petitions')
+          .select(`
+               petitionid,
+               title,
+               description,
+               createduserid,
+               categoryid,
+               users!inner (
+                    userid,
+                    profilepic,
+                    name
+               )
+          `)
+          .eq('userID', userId);
+
+          if (error) {
+               console.error('error fetching petitions: ', error)
+          } else {
+               setPetitions(data)
+               console.log(data)
+          }
+     };
+     fetchPetitions();
 
         return () => {
             document.body.style.overflow = originalStyle;
@@ -33,7 +97,7 @@ const UserProfile = () => {
               height: '100px', // Set a fixed height for the image
               objectFit: 'cover' // Ensure the image covers the area without distortion
           }} />
-          <h1>John Smith</h1>
+          <h1>userName</h1>
           <p>October 31, 2023</p>
           <button className="edit-profile" style={{
               backgroundColor: 'darkgray',
@@ -45,23 +109,27 @@ const UserProfile = () => {
           }}>Edit Profile</button>
         </div>
         <div className="petitions-container" style={{ flexGrow: '1', overflowY: 'hidden', background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)', color: 'white' }}>
-          <h2>John Smith's Petitions</h2>
-          <div className="petitions-list" style={{
-              overflowY: 'auto', // Enable scrolling
-              maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
-              padding: '20px',
-              display: 'flex',
-              flexDirection: 'column'
-          }}>
-              <PetitionCard />
-              <PetitionCard />
-              <PetitionCard />
-              <PetitionCard />
-              <PetitionCard />
-              <PetitionCard />
-              <PetitionCard />
-          </div>
-        </div>
+
+                    <div className="petition-list" style={{
+                         overflowY: 'auto', // Enable scrolling
+                         maxHeight: 'calc(100vh - 200px)', // Set maximum height (viewport height minus some offset)
+                         display: 'flex',
+                         padding: '20px',
+                         marginRight: '20px',
+                         flexDirection: 'column',
+                         alignItems: 'center',
+                    }}>
+                         {petitions.map((petition) => (
+                              <PetitionCard 
+                                   key={petition.petitionid} 
+                                   title={petition.title} 
+                                   description={petition.description}
+                                   imageUrl={petition.users.profilepic || '/profile-default.png'}
+                                   user={petition.users.name}
+                              />
+                         ))}
+                    </div>
+               </div>
       </div>
     );
   };
