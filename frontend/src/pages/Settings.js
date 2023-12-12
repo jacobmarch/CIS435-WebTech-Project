@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import './SettingsPage.css'; // Import your CSS file for styling
+import supabase from '../App';
 
 const ProfileImage = ({ src }) => (
   <img src={src} alt="Profile" className="profile-image" />
@@ -31,7 +32,6 @@ const SettingsPage = () => {
             <h3>Profile Information</h3>
             <p>Name: John Doe</p>
             <p>Email: johndoe@example.com</p>
-            <button className="interactive-button">Edit Profile</button>
           </div>
         );
 
