@@ -11,11 +11,41 @@ const SettingsPage = () => {
   const [activeSection, setActiveSection] = useState('View Profile');
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
-  
+  const [oldPassword, setOldPassword] = useState(''); // For Change Password
+  const [newPassword, setNewPassword] = useState(''); // For Change Password
+  const [confirmPassword, setConfirmPassword] = useState(''); // For Change Password
+
 
   const handleNavButtonClick = (section) => {
     setActiveSection(section);
   };
+    
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+        alert('New passwords do not match.');
+        return;
+    }
+
+    try {
+        const { error } = await supabase.auth.updateUser({ password: newPassword });
+
+        if (error) {
+            console.error('Error changing password:', error);
+            alert('Error changing password. Please try again.');
+        } else {
+            alert('Password changed successfully!');
+            // Reset Password fields
+            setOldPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+        }
+    } catch (error) {
+        console.error('Error changing password:', error);
+        alert('Error changing password. Please try again.');
+    }
+};
 
   React.useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -68,7 +98,6 @@ const SettingsPage = () => {
             <h3>Profile Information</h3>
             <p>Name: {userName}</p>
             <p>Email: {email}</p>
-            <button className="interactive-button">Edit Profile</button>
           </div>
         );
 
@@ -87,43 +116,16 @@ const SettingsPage = () => {
             <button className="interactive-button">Save Changes</button>
           </div>
         );
-
-      case 'Security':
-        return (
-          <div className="settings-section">
-            <h3>Security Settings</h3>
-            <button className="interactive-button">Update Security</button>
-          </div>
-        );
-
-      case 'Notifications':
-        return (
-          <div className="settings-section">
-            <h3>Notification Settings</h3>
-            <p>Sample notification: Your petition has been signed!</p>
-            <button className="interactive-button">Save Notification Settings</button>
-          </div>
-        );
-
       case 'Password':
         return (
           <div className="settings-section">
             <h3>Change Password</h3>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <label>
-                Current Password:
-                <input type="password" className="input-style" />
-              </label>
-              <label>
-                New Password:
-                <input type="password" className="input-style" />
-              </label>
-              <label>
-                Confirm New Password:
-                <input type="password" className="input-style" />
-              </label>
-              <button type="submit" className="interactive-button">Change Password</button>
-            </form>
+            <form onSubmit={handleSubmit}>                
+              <input type="password" className="input-style" placeholder="Current Password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
+              <input type="password" className="input-style" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+              <input type="password" className="input-style" placeholder="Confirm New Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <button type="submit" className="interactive-button ">Change Password</button>
+          </form>
           </div>
         );
 
@@ -161,11 +163,11 @@ const SettingsPage = () => {
   );
 };
 
+
+
 const sections = {
   'View Profile': 'View Profile',
   'Account': 'Account',
-  'Security': 'Security',
-  'Notifications': 'Notifications',
   'Password': 'Password',
 };
 
