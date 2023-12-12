@@ -9,6 +9,7 @@ import UserProfile from './pages/UserProfile';
 import MainFeed from './pages/MainFeed';
 import Settings from './pages/Settings';
 import LogoutPage from './pages/Logout';
+import Trending from './pages/Trending';
 import './App.css';
 
 
@@ -42,6 +43,7 @@ function App() {
                     {session && <Route path="/userprofile" element={<UserProfile />} />}
                     {session && <Route path="/settings" element={<Settings />} />}
                     {session && <Route path="/Logout" element={<LogoutPage />} />}
+                    {session && <Route path="/Trending" element={<Trending />} />}
                     {/* If no other routes match, you can have a catch-all redirect or a 404 component */}
                     {!session && <Route path="*" element={<Navigate replace to="/login" />} />}
                     {session && <Route path="*" element={<Navigate replace to="/" />} />}
