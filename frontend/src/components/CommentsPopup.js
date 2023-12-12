@@ -1,9 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../App';
 import './Popup.css';
 
 function CommentsPopup({ trigger, setTrigger, petitionId }) {
     const [comment, setComment] = useState('');
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        if(trigger) {
+            fetchComments();
+        }
+    }, [trigger, petitionId]);
+
+    const fetchComments = async () => {
+        const { data, error } = await supabase
+            .from('comments')
+            .select(`commentID,
+            userID,
+            commentText,
+            petitionID,
+            users!inner (
+                userID,
+                name
+            )`)
+            .eq('petitionID', petitionId);
+        if(error) {
+            console.error('Error fetching comments:', error);
+        } else {
+            setComments(data);
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,6 +70,13 @@ function CommentsPopup({ trigger, setTrigger, petitionId }) {
                     />
                     <input type="submit" value="Submit Comment" />
                 </form>
+                <div className="comments-section">
+                {comments.map(comment => (
+                    <div key={comment.id} className="comment">
+                        <strong>{comment.users.name}: </strong>{comment.commentText}
+                    </div>
+                ))}
+            </div>
             </div>
         </div>
     ) : "";

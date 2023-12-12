@@ -69,3 +69,15 @@
 .popup-form input[type="submit"]:hover {
     background-color: rgb(51, 51, 51);
 }
+
+.comments-section {
+    margin-top: 20px;
+    max-height: 200px; /* Adjust as needed */
+    overflow-y: auto; /* Enable scrolling for overflow */
+    border-top: 1px solid #ddd; /* Optional divider */
+    padding-top: 10px;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
