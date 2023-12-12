@@ -2,34 +2,9 @@ import React from "react";
 import Popup from "../components/Popup";
 import { useState } from 'react';
 import { supabase } from '../App';
-import CommentsPopup from "../components/CommentsPopup";
 
-const handleSignPetition = async (petitionId) => {
-  try {
-    const user = supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error("User must be logged in to sign");
-    }
-
-    const { data, error } = await supabase
-      .from('signatures')
-      .insert([
-        { userID: (await user).data.user.id, petitionID: petitionId }
-      ]);
-    if (error) {
-      throw error;
-    }
-
-    console.log('Petition signed:', data);
-    // Further actions like updating UI or state
-  } catch (error) {
-    console.error('Error signing petition:', error.message);
-  }
-};
 
 const MainFeed = () => {
-  
      const urlParams = new URLSearchParams(window.location.search);
      const query = urlParams.get('query');
      const [petitions, setPetitions] = useState([]);
@@ -40,13 +15,14 @@ const MainFeed = () => {
           const fetchPetitions = async () => {
                if (query){
                     const {data, error} = await supabase
-                    .from('petitions')
+                    .from('petitionsign')
                     .select(`
                          petitionid,
                          title,
                          description,
                          createdUserID,
                          categoryid,
+                         signcount,
                          users!inner (
                               userID,
                               profilepic,
@@ -58,18 +34,18 @@ const MainFeed = () => {
                          console.error('error fetching petitions: ', error)
                     } else {
                          setPetitions(data)
-                         console.log(data)
                     }
                }
                else {
                     const {data, error} = await supabase
-                    .from('petitions')
+                    .from('petitionsign')
                     .select(`
                          petitionid,
                          title,
                          description,
                          createdUserID,
                          categoryid,
+                         signcount,
                          users!inner (
                               userID,
                               profilepic,
@@ -80,10 +56,11 @@ const MainFeed = () => {
                          console.error('error fetching petitions: ', error)
                     } else {
                          setPetitions(data)
-                         console.log(data)
                     }
                }
           };
+
+          fetchPetitions();
           const intervalId = setInterval(fetchPetitions, 5000); // 5000 milliseconds = 5 seconds
 
           return () => {
@@ -122,12 +99,12 @@ const MainFeed = () => {
                     }}>
                          {petitions.map((petition) => (
                               <PetitionCard 
-                                  key={petition.petitionid} 
-                                  petitionID={petition.petitionid}
-                                  title={petition.title} 
-                                  description={petition.description}
-                                  imageUrl={petition.users.profilepic || '/profile-default.png'}
-                                  user={petition.users.name}
+                                   key={petition.petitionid} 
+                                   title={petition.title} 
+                                   description={petition.description}
+                                   imageUrl={petition.users.profilepic || '/profile-default.png'}
+                                   user={petition.users.name}
+                                   signCount={petition.signcount}
                               />
                          ))}
                     </div>
@@ -136,8 +113,7 @@ const MainFeed = () => {
      );
 };
 
-const PetitionCard = ({petitionID, title, description, imageUrl, user}) => {
-  const [showCommentsPopup, setShowCommentsPopup] = useState(false);
+const PetitionCard = ({title, description, imageUrl, user, signCount}) => {
      const actionButtonStyles = {
           background: 'black',
           color: 'white',
@@ -172,15 +148,10 @@ const PetitionCard = ({petitionID, title, description, imageUrl, user}) => {
             <div className="username-container">
               <h3>{user}</h3>
             </div>
+            <h4>{signCount} supporter(s)!</h4>
             <div className="petition-actions">
-              <button className="sign" style={actionButtonStyles} onClick={() => handleSignPetition(petitionID)}>Sign</button>
-              
-              <button className="comments" style={actionButtonStyles} onClick={() => setShowCommentsPopup(true)}>Comment</button>
-              <CommentsPopup 
-                trigger={showCommentsPopup} 
-                setTrigger={setShowCommentsPopup} 
-                petitionId={petitionID}
-              />
+              <button className="sign" style={actionButtonStyles}>Sign</button>
+              <button className="comments" style={actionButtonStyles}>Comment</button>
             </div>
           </div>
           <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
