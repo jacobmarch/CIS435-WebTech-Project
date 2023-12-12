@@ -14,11 +14,34 @@ const SettingsPage = () => {
   const [oldPassword, setOldPassword] = useState(''); // For Change Password
   const [newPassword, setNewPassword] = useState(''); // For Change Password
   const [confirmPassword, setConfirmPassword] = useState(''); // For Change Password
+  const [newName, setNewName] = useState('');
 
 
   const handleNavButtonClick = (section) => {
     setActiveSection(section);
   };
+
+  const handleSubmitName = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { error } = await supabase
+        .from('users')
+        .update({ name: newName })
+        .eq('userID', (await supabase.auth.getUser()).data.user.id);
+      
+      if (error) {
+        console.error('Error updating name:', error);
+        alert('Error updating name. Please try again.');
+      } else {
+        alert('Name updated successfully!');
+        setNewName('');
+      }
+    } catch (error) {
+      console.error('Error updating name:', error);
+      alert('Error updating name. Please try again.');
+    }
+  }
     
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,15 +128,10 @@ const SettingsPage = () => {
         return (
           <div className="settings-section">
             <h3>Account Settings</h3>
-            <label>
-              Username:
-              <input type="text" defaultValue="JohnDoe123" className="input-style" />
-            </label>
-            <label>
-              Email:
-              <input type="email" defaultValue="johndoe@example.com" className="input-style" />
-            </label>
-            <button className="interactive-button">Save Changes</button>
+            <form onSubmit={handleSubmitName}>
+              <input type="text" placeholder="Update Name" className="input-style" value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <button className="interactive-button" type="submit">Save Changes</button>
+            </form>
           </div>
         );
       case 'Password':

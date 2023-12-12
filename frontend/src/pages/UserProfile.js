@@ -4,6 +4,7 @@ import { supabase } from '../App';
 
 const UserProfile = () => {
   const [userName, setUserName] = useState('');
+  const [dateJoined, setDateJoined] = useState('');
   const [userId, setUserId] = useState('');
   const [petitions, setPetitions] = useState([]);
   let realID;
@@ -28,7 +29,7 @@ const UserProfile = () => {
         
               const { data, error: userError } = await supabase
                 .from('users')
-                .select('name')
+                .select('name, datejoined')
                 .eq('userID', user.id);
         
               if (userError) {
@@ -36,6 +37,7 @@ const UserProfile = () => {
               }
         
               setUserName(data[0].name);
+              setDateJoined(data[0].datejoined.substring(0, 10));
               setUserId(user.id);
               realID = user.id;
             }
@@ -105,15 +107,7 @@ const UserProfile = () => {
               objectFit: 'cover' // Ensure the image covers the area without distortion
           }} />
           <h1>{userName}</h1>
-          <p>October 31, 2023</p>
-          <button className="edit-profile" style={{
-              backgroundColor: 'darkgray',
-              color: 'white',
-              padding: '10px 20px',
-              border: 'none',
-              cursor: 'pointer',
-              marginTop: '10px'
-          }}>Edit Profile</button>
+          <p>Joined: {dateJoined}</p>
         </div>
         <div className="petitions-container" style={{ flexGrow: '1', overflowY: 'hidden', background: 'linear-gradient(180deg, #000 16.15%, #FFF 100%)', color: 'white' }}>
 
