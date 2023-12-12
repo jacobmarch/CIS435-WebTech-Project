@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import './SettingsPage.css'; // Import your CSS file for styling
-import supabase from '../App';
+import { supabase } from '../App';
 
 const ProfileImage = ({ src }) => (
   <img src={src} alt="Profile" className="profile-image" />
@@ -9,6 +9,9 @@ const ProfileImage = ({ src }) => (
 
 const SettingsPage = () => {
   const [activeSection, setActiveSection] = useState('View Profile');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  
 
   const handleNavButtonClick = (section) => {
     setActiveSection(section);
@@ -17,6 +20,39 @@ const SettingsPage = () => {
   React.useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = 'hidden';
+
+    const fetchUserData = async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+    
+        if (error) {
+          throw error;
+        }
+
+        
+          const user = data.session.user;
+        
+    
+        if (data) {
+    
+          const { data, error: userError } = await supabase
+            .from('users')
+            .select('name')
+            .eq('userID', user.id);
+    
+          if (userError) {
+            throw userError;
+          }
+    
+          setUserName(data[0].name);
+          setEmail(user.email);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+    };
+
+    fetchUserData();
 
     return () => {
       document.body.style.overflow = originalStyle;
@@ -30,8 +66,9 @@ const SettingsPage = () => {
           <div className="settings-section">
             <ProfileImage src="/user_alt.svg" />
             <h3>Profile Information</h3>
-            <p>Name: John Doe</p>
-            <p>Email: johndoe@example.com</p>
+            <p>Name: {userName}</p>
+            <p>Email: {email}</p>
+            <button className="interactive-button">Edit Profile</button>
           </div>
         );
 
