@@ -83,7 +83,7 @@ const Header = () => {
       </div>
         {/* Dropdown Menu */}
         {menuOpen && (
-          <div style={{ position: 'absolute', right: '20px', top: '70px', backgroundColor: 'darkgray', borderRadius: '5px', padding: '10px', zIndex: '100' }}>
+          <div style={{ position: 'absolute', right: '20px', top: '84px', backgroundColor: 'darkgray', borderRadius: '5px', padding: '10px', zIndex: '100' }}>
             {isLoggedIn ? (
               <>
                 <Link to="/" className='menu-link'>Home</Link>
