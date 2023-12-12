@@ -15,8 +15,10 @@ const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
 const supabase = createClient(supabaseURL, supabaseAnonKey);
 
+export { supabase };
+
 function App() {
-    const [session, setSession] = useState(supabase.auth.session());
+    const [session, setSession] = useState(supabase.auth.getSession());
 
     useEffect(() => {
         document.title = 'Dearborn Voice';
@@ -33,7 +35,6 @@ function App() {
 
     return (
         <div className="App">
-            <Router>
                 <Header />
                 <Routes>
                     {session && <Route path="/" element={<MainFeed />} />}
@@ -45,7 +46,6 @@ function App() {
                     {!session && <Route path="*" element={<Navigate replace to="/login" />} />}
                     {session && <Route path="*" element={<Navigate replace to="/" />} />}
                 </Routes>
-            </Router>
         </div>
     );
 }
