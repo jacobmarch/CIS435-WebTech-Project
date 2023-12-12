@@ -15,13 +15,14 @@ const MainFeed = () => {
           const fetchPetitions = async () => {
                if (query){
                     const {data, error} = await supabase
-                    .from('petitions')
+                    .from('petitionsign')
                     .select(`
                          petitionid,
                          title,
                          description,
                          createdUserID,
                          categoryid,
+                         signcount,
                          users!inner (
                               userID,
                               profilepic,
@@ -33,18 +34,18 @@ const MainFeed = () => {
                          console.error('error fetching petitions: ', error)
                     } else {
                          setPetitions(data)
-                         console.log(data)
                     }
                }
                else {
                     const {data, error} = await supabase
-                    .from('petitions')
+                    .from('petitionsign')
                     .select(`
                          petitionid,
                          title,
                          description,
                          createdUserID,
                          categoryid,
+                         signcount,
                          users!inner (
                               userID,
                               profilepic,
@@ -55,10 +56,11 @@ const MainFeed = () => {
                          console.error('error fetching petitions: ', error)
                     } else {
                          setPetitions(data)
-                         console.log(data)
                     }
                }
           };
+
+          fetchPetitions();
           const intervalId = setInterval(fetchPetitions, 5000); // 5000 milliseconds = 5 seconds
 
           return () => {
@@ -102,6 +104,7 @@ const MainFeed = () => {
                                    description={petition.description}
                                    imageUrl={petition.users.profilepic || '/profile-default.png'}
                                    user={petition.users.name}
+                                   signCount={petition.signcount}
                               />
                          ))}
                     </div>
@@ -110,7 +113,7 @@ const MainFeed = () => {
      );
 };
 
-const PetitionCard = ({title, description, imageUrl, user}) => {
+const PetitionCard = ({title, description, imageUrl, user, signCount}) => {
      const actionButtonStyles = {
           background: 'black',
           color: 'white',
@@ -145,9 +148,9 @@ const PetitionCard = ({title, description, imageUrl, user}) => {
             <div className="username-container">
               <h3>{user}</h3>
             </div>
+            <h4>{signCount} supporter(s)!</h4>
             <div className="petition-actions">
               <button className="sign" style={actionButtonStyles}>Sign</button>
-              
               <button className="comments" style={actionButtonStyles}>Comment</button>
             </div>
           </div>
