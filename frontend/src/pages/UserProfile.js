@@ -13,21 +13,20 @@ const UserProfile = () => {
 
         const fetchUserData = async () => {
           try {
-            const { user, session, error } = supabase.auth.session();
+            const { session, error } = supabase.auth.getSession();
+            const user = (await supabase.auth.getSession()).data.user;
     
             if (error) {
               throw error;
             }
     
             if (user && session) {
-              const currentUserId = user.userID;
     
               
               const { data, error: userError } = await supabase
                 .from('users')
                 .select('name')
-                .eq('userID', currentUserId)
-                .single();
+                .eq('userID', user.id);
     
               if (userError) {
                 throw userError;
@@ -35,7 +34,7 @@ const UserProfile = () => {
     
               // Update state with the user's name and ID
               setUserName(data.name);
-              setUserId(currentUserId);
+              setUserId(user.id);
             }
           } catch (error) {
             console.error('Error fetching user data:', error.message);
@@ -51,15 +50,15 @@ const UserProfile = () => {
                petitionid,
                title,
                description,
-               createduserid,
+               createdUserID,
                categoryid,
                users!inner (
-                    userid,
+                    userID,
                     profilepic,
                     name
                )
           `)
-          .eq('userID', userId);
+          .eq('users.userID', userId);
 
           if (error) {
                console.error('error fetching petitions: ', error)
@@ -97,7 +96,7 @@ const UserProfile = () => {
               height: '100px', // Set a fixed height for the image
               objectFit: 'cover' // Ensure the image covers the area without distortion
           }} />
-          <h1>userName</h1>
+          <h1>{userName}</h1>
           <p>October 31, 2023</p>
           <button className="edit-profile" style={{
               backgroundColor: 'darkgray',
