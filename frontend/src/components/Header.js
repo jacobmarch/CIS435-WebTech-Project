@@ -18,6 +18,12 @@ const Header = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [query, setQuery] = useState('');
+
+  const handleHomeClick = () => {
+    setQuery('');
+    window.location.href = `/?query=${query}`;
+  }
 
   useEffect(() => {
     const session = supabase.auth.getSession();
@@ -86,7 +92,7 @@ const Header = () => {
           <div style={{ position: 'absolute', right: '20px', top: '84px', backgroundColor: 'darkgray', borderRadius: '5px', padding: '10px', zIndex: '100' }}>
             {isLoggedIn ? (
               <>
-                <Link to="/" className='menu-link'>Home</Link>
+                <Link to="/?query=" className='menu-link' onClick={handleHomeClick}>Home</Link>
                 <Link to="/Settings" className='menu-link'>Settings</Link>
                 <Link to="/UserProfile" className='menu-link'>User Profile</Link>
                 <Link to="/Logout" className='menu-link'>Logout</Link>
