@@ -1,11 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState} from 'react';
 import { supabase } from '../App';
 
 const UserProfile = () => {
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
   const [petitions, setPetitions] = useState([]);
+  let realID;
   
     React.useEffect(() => {
         const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -13,35 +14,38 @@ const UserProfile = () => {
 
         const fetchUserData = async () => {
           try {
-            const { session, error } = supabase.auth.getSession();
-            const user = (await supabase.auth.getSession()).data.user;
-    
+            const { data, error } = await supabase.auth.getSession();
+        
             if (error) {
               throw error;
             }
-    
-            if (user && session) {
-    
-              
+
+            
+              const user = data.session.user;
+            
+        
+            if (data) {
+        
               const { data, error: userError } = await supabase
                 .from('users')
                 .select('name')
                 .eq('userID', user.id);
-    
+        
               if (userError) {
                 throw userError;
               }
-    
-              // Update state with the user's name and ID
-              setUserName(data.name);
+        
+              setUserName(data[0].name);
               setUserId(user.id);
+              realID = user.id;
             }
           } catch (error) {
             console.error('Error fetching user data:', error.message);
           }
         };
+        
     
-        fetchUserData();
+        //fetchUserData();
 
         const fetchPetitions = async () => {
           const {data, error} = await supabase
@@ -58,7 +62,7 @@ const UserProfile = () => {
                     name
                )
           `)
-          .eq('users.userID', userId);
+          .filter('users.userID', 'eq', realID);
 
           if (error) {
                console.error('error fetching petitions: ', error)
@@ -67,7 +71,11 @@ const UserProfile = () => {
                console.log(data)
           }
      };
-     fetchPetitions();
+     //fetchPetitions();
+
+     const intervalId = setInterval(fetchUserData, 2500); // 2500 milliseconds = 2.5 seconds
+     const intervalId2 = setInterval(fetchPetitions, 5000); // 5000 milliseconds = 5 seconds
+
 
         return () => {
             document.body.style.overflow = originalStyle;
@@ -134,37 +142,53 @@ const UserProfile = () => {
   };
   
 
-const PetitionCard = () => {
-
+  const PetitionCard = ({title, description, imageUrl, user}) => {
     const actionButtonStyles = {
-      background: 'black',
-      color: 'white',
-      padding: '10px 20px',
-      border: 'none',
-      cursor: 'pointer',
-      marginTop: '10px'
+         background: 'black',
+         color: 'white',
+         padding: '10px 20px',
+         border: 'none',
+         cursor: 'pointer',
+         marginTop: '10px',
+         borderRadius: '20px',
+         margin: '5px'
     };
     
-  return (
-    <div className="petition-card" style={{
-        background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
-        color: 'black',
-        marginBottom: '10px',
-        padding: '20px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        border: '1px solid black',
-        }}>
-      <div className="petition-actions">
-        <button className="sign" style={actionButtonStyles}>Sign</button>
-        <button className="comments" style={actionButtonStyles}>Comment</button>
+    return (
+      <div className="petition-card" style={{
+           background: 'linear-gradient(180deg, #FFF 16.15%, #888 100%)',
+           color: 'black',
+           marginBottom: '10px',
+           padding: '20px',
+           display: 'flex',
+           alignItems: 'center',
+           border: '1px solid black',
+           borderRadius: '10px',
+           minWidth: '75vw',
+           maxWidth: '75vw'
+         }}>
+           <img src={imageUrl} alt="Profile" style={{
+             width: '100px',
+             height: '100px',
+             borderRadius: '50%',
+             marginRight: '20px',
+           }} />
+           <div className="container">
+             <div className="username-container">
+               <h3>{user}</h3>
+             </div>
+             <div className="petition-actions">
+               <button className="sign" style={actionButtonStyles}>Sign</button>
+               
+               <button className="comments" style={actionButtonStyles}>Comment</button>
+             </div>
+           </div>
+           <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
+             <h3><u>{title}</u></h3>
+             <p>{description}</p>
+           </div>
       </div>
-      <div className="petition-info" >
-        <h3><u>Title</u></h3>
-        <p>This is a summary of the petition. It is a very useful and descriptive summary. I am so glad that this awesome website includes a summary to display for each petition.</p>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default UserProfile;
