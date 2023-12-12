@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState} from 'react';
 import { supabase } from '../App';
+import CommentsPopup from "../components/CommentsPopup";
 
 const UserProfile = () => {
   const [userName, setUserName] = useState('');
@@ -45,19 +46,17 @@ const UserProfile = () => {
             console.error('Error fetching user data:', error.message);
           }
         };
-        
-    
-        //fetchUserData();
 
         const fetchPetitions = async () => {
           const {data, error} = await supabase
-          .from('petitions')
+          .from('petitionsign')
           .select(`
                petitionid,
                title,
                description,
                createdUserID,
                categoryid,
+               signcount,
                users!inner (
                     userID,
                     profilepic,
@@ -73,7 +72,8 @@ const UserProfile = () => {
                console.log(data)
           }
      };
-     //fetchPetitions();
+     fetchPetitions();
+     fetchUserData();
 
      const intervalId = setInterval(fetchUserData, 2500); // 2500 milliseconds = 2.5 seconds
      const intervalId2 = setInterval(fetchPetitions, 5000); // 5000 milliseconds = 5 seconds
@@ -127,6 +127,7 @@ const UserProfile = () => {
                                    description={petition.description}
                                    imageUrl={petition.users.profilepic || '/profile-default.png'}
                                    user={petition.users.name}
+                                   signCount={petition.signcount}
                               />
                          ))}
                     </div>
@@ -136,7 +137,7 @@ const UserProfile = () => {
   };
   
 
-  const PetitionCard = ({title, description, imageUrl, user}) => {
+  const PetitionCard = ({title, description, imageUrl, user, signCount}) => {
     const actionButtonStyles = {
          background: 'black',
          color: 'white',
@@ -171,8 +172,9 @@ const UserProfile = () => {
              <div className="username-container">
                <h3>{user}</h3>
              </div>
+             <h4>{signCount} supporter(s)!</h4>
              <div className="petition-actions">
-             </div>
+             </div>     
            </div>
            <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
              <h3><u>{title}</u></h3>

@@ -194,7 +194,6 @@ const PetitionCard = ({petitionID, title, description, imageUrl, user, signCount
             <h4>{signCount} supporter(s)!</h4>
             <div className="petition-actions">
               <button className="sign" style={actionButtonStyles} onClick={() => handleSignPetition(petitionID)}>Sign</button>
-              
               <button className="comments" style={actionButtonStyles} onClick={() => setShowCommentsPopup(true)}>Comment</button>
               <CommentsPopup 
                 trigger={showCommentsPopup} 
