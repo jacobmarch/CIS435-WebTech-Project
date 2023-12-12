@@ -6,7 +6,7 @@ import { supabase } from '../App';
 function handleSearch(event) {
   event.preventDefault();
   const searchInput = document.getElementById('search-input');
-  window.location.href = `/search?query=${searchInput.value}`;
+  window.location.href = `/?query=${searchInput.value}`;
 }
 
 /**
@@ -49,6 +49,7 @@ const Header = () => {
     {/* Center section: Search bar */}
     {isLoggedIn ? (
     <div style={{ flex: 1, paddingLeft: '20px', paddingRight: '20px'}}>
+      <form className='search-form' onSubmit={handleSearch}>
       <input
         type="text"
         placeholder="Search..."
@@ -65,8 +66,8 @@ const Header = () => {
           outline: '0',
           marginRight:'225px'
         }}
-        onSubmit={handleSearch}
       />
+    </form>
     </div>) : (
       <div>
 

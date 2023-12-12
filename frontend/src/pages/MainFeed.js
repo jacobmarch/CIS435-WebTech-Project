@@ -5,35 +5,61 @@ import { supabase } from '../App';
 
 
 const MainFeed = () => {
+     const urlParams = new URLSearchParams(window.location.search);
+     const query = urlParams.get('query');
      const [petitions, setPetitions] = useState([]);
      React.useEffect(() => {
           const originalStyle = window.getComputedStyle(document.body).overflow;
           document.body.style.overflow = 'hidden';
 
           const fetchPetitions = async () => {
-               const {data, error} = await supabase
-               .from('petitions')
-               .select(`
-                    petitionid,
-                    title,
-                    description,
-                    createdUserID,
-                    categoryid,
-                    users!inner (
-                         userID,
-                         profilepic,
-                         name
-                    )
-               `);
-
-               if (error) {
-                    console.error('error fetching petitions: ', error)
-               } else {
-                    setPetitions(data)
-                    console.log(data)
+               if (query){
+                    const {data, error} = await supabase
+                    .from('petitions')
+                    .select(`
+                         petitionid,
+                         title,
+                         description,
+                         createdUserID,
+                         categoryid,
+                         users!inner (
+                              userID,
+                              profilepic,
+                              name
+                         )
+                    `)
+                    .ilike('description', `%${query}%`)
+                    if (error) {
+                         console.error('error fetching petitions: ', error)
+                    } else {
+                         setPetitions(data)
+                         console.log(data)
+                    }
+               }
+               else {
+                    const {data, error} = await supabase
+                    .from('petitions')
+                    .select(`
+                         petitionid,
+                         title,
+                         description,
+                         createdUserID,
+                         categoryid,
+                         users!inner (
+                              userID,
+                              profilepic,
+                              name
+                         )
+                    `);
+                    if (error) {
+                         console.error('error fetching petitions: ', error)
+                    } else {
+                         setPetitions(data)
+                         console.log(data)
+                    }
                }
           };
-          const intervalId = setInterval(fetchPetitions, 1000); // 5000 milliseconds = 5 seconds
+          const intervalId = setInterval(fetchPetitions, 5000); // 5000 milliseconds = 5 seconds
 
           return () => {
                document.body.style.overflow = originalStyle;
