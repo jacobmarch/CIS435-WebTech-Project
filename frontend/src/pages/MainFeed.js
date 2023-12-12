@@ -2,6 +2,7 @@ import React from "react";
 import Popup from "../components/Popup";
 import { useState } from 'react';
 import { supabase } from '../App';
+import CommentsPopup from "../components/CommentsPopup";
 
 const handleSignPetition = async (petitionId) => {
   try {
@@ -136,6 +137,7 @@ const MainFeed = () => {
 };
 
 const PetitionCard = ({petitionID, title, description, imageUrl, user}) => {
+  const [showCommentsPopup, setShowCommentsPopup] = useState(false);
      const actionButtonStyles = {
           background: 'black',
           color: 'white',
@@ -173,7 +175,12 @@ const PetitionCard = ({petitionID, title, description, imageUrl, user}) => {
             <div className="petition-actions">
               <button className="sign" style={actionButtonStyles} onClick={() => handleSignPetition(petitionID)}>Sign</button>
               
-              <button className="comments" style={actionButtonStyles}>Comment</button>
+              <button className="comments" style={actionButtonStyles} onClick={() => setShowCommentsPopup(true)}>Comment</button>
+              <CommentsPopup 
+                trigger={showCommentsPopup} 
+                setTrigger={setShowCommentsPopup} 
+                petitionId={petitionID}
+              />
             </div>
           </div>
           <div className="petition-info" style={{marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '50vw', maxWidth: '50vw'}}>
